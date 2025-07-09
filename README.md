@@ -10,8 +10,10 @@
 - Traditional Email login
 - Dashboard with schedule, results, and upcoming quizzes/assignments
 - Join classrooms via code
-- View and attempt quizzes
-- View and submit assignments
+- Quizzes
+  - View available quizzes
+  - Attempt quizzes within deadlines
+  - Review quiz results
 - Attendance tracking
 - Profile and settings management
 
@@ -38,7 +40,15 @@
 - Quiz analytics for teachers
 
 ---
+---
+## Tech Stack
 
+- **Backend**: Django, MySQL
+- **Frontend**: HTML, CSS, JavaScript, Bootstrap
+- **Storage**: AWS S3 (for media and attachments)
+- **Authentication**: Django's built-in auth system with role-based access
+- **Deployment**: (Add if applicable, e.g., Render, Heroku, EC2)
+---
 ---
 
 ## Project Flow
