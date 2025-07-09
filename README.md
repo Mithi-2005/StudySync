@@ -95,7 +95,7 @@
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/Mithi-2005/StudySync
    cd study_sync
    ```
 
