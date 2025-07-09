@@ -40,7 +40,6 @@
 - Quiz analytics for teachers
 
 ---
----
 ## Tech Stack
 
 - **Backend**: Django, MySQL
@@ -48,7 +47,6 @@
 - **Storage**: AWS S3 (for media and attachments)
 - **Authentication**: Django's built-in auth system with role-based access
 - **Deployment**: (Add if applicable, e.g., Render, Heroku, EC2)
----
 ---
 
 ## Project Flow
