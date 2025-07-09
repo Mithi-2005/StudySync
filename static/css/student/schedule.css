@@ -1,0 +1,281 @@
+.timetable-container {
+  width: 100%;
+  padding: 20px;
+}
+
+/* 📌 Laptop View - Full Week (Table-like Layout using Divs) */
+.laptop-view {
+  display: block;
+}
+.mobile-view{
+  display: none;
+}
+
+.timetable-grid {
+  display: grid;
+  grid-template-columns: repeat(1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+  background: transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.timetable-header{
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  gap: 15px;
+}
+.timetable-body{
+  display: grid;
+  grid-template-columns: 1fr;
+}
+.row{
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.timetable-header div, .slot {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  height: 50px;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.slot{
+  position: relative; /* This allows the tooltip to be positioned correctly */
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+/* Tooltip styling */
+.slot .tooltip {
+  visibility: hidden;
+  position: absolute;
+  bottom: 120%; /* Position above the slot */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  padding: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
+  font-size: 14px;
+  width: 200px; /* Set a fixed width */
+  max-width: 250px; /* Limit max width */
+  word-wrap: break-word; /* Allow wrapping */
+  white-space: normal; /* Prevent text from overflowing */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+/* Show tooltip on hover */
+.slot:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+@media (min-width: 769px) {
+  .slot:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+}
+
+/* 📱 Mobile View: Click-Based Tooltip */
+@media (max-width: 768px) {
+  .tooltip.active {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+.slot .tooltip::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent; /* Triangle pointing down */
+}
+
+
+.timetable-header div {
+  background: #007BFF;
+  color: white;
+}
+
+.course-details {
+  margin-top: 30px;
+}
+
+.course-details-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.course-details-grid div {
+  padding: 8px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.course-details-grid div:nth-child(1) {
+  font-weight: bold;
+}
+
+/* 📌 Mobile View - General Styling */
+@media (max-width: 768px) {
+  .laptop-view {
+    display: none;
+  }
+
+  .mobile-view {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px;
+  }
+
+
+   .day-selector {
+    display: flex;
+    justify-content: flex-start; /* Align to start */
+    width: 100%;
+    gap: 10px;
+    margin-bottom: 15px;
+    overflow-x: auto; /* Enable horizontal scroll */
+    white-space: nowrap; /* Prevent wrapping */
+    padding: 5px ; /* Optional: To give space above and below the buttons */
+  }
+
+  .day-selector::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in WebKit browsers */
+  }
+
+  .day-selector {
+    -ms-overflow-style: none; /* For Internet Explorer 10+ */
+    scrollbar-width: none; /* For Firefox */
+  }
+
+  .day-btn {
+    padding: 10px 18px;
+    border: none;
+    color: #007BFF;
+    background: white;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+    border: 0.5px solid black;
+    transition: background 0.3s ease;
+  }
+
+  .day-btn:hover, .day-btn.active {
+    background: #0056b3;
+    color: white;
+  }
+
+  /* 📌 Ensure proper card alignment */
+  #mobile-timetable {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+.course-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 15px 20px;
+  margin: 10px 0;
+  max-width: 600px;
+  font-family: Arial, sans-serif;
+  transition: transform 0.3s ease;
+}
+
+/* Hover effect */
+.course-card:hover {
+  transform: translateY(0px);
+}
+
+/* Course info styling */
+.course-info h3 {
+  font-size: 18px;
+  color: #000;
+  margin: 0;
+  font-weight: bold;
+}
+
+.course-info p {
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0 0;
+}
+
+/* Time styling */
+.course-time {
+  font-size: 14px;
+  color: #007bff;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.course-time p{
+  font-size: 14px;
+  color: #666;
+  margin: 5px 0 0;
+}
+
+/* Time hover effect */
+.course-time h4:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .tooltip {
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    padding: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
+    font-size: 14px;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+
+  /* Show tooltip when active */
+  .tooltip.active {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}

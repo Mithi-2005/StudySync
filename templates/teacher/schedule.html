@@ -1,0 +1,79 @@
+{% extends "../teacher/index.html" %} {% block content %}
+
+<!-- Main Content -->
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <h2>Timetable Management</h2>
+  </div>
+
+  <div class="timetable-container">
+    <!-- LAPTOP VIEW (Visible on Large Screens) -->
+    <div class="laptop-view">
+      <h3 class="section-title">Weekly Schedule</h3>
+      <table class="timetable">
+        <thead>
+          <tr>
+            <th>Time</th>
+            {% for day in days %}
+            <th>{{ day }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in table_data %}
+          <tr>
+            <td class="time-slot">{{ row.time }}</td>
+            {% for class in row.classes %}
+            <td class="class-cell">
+              {% if class %}
+              <span class="tooltip-wrapper">
+                {{ class.room|default:"--" }}
+                <span class="tooltip-content">
+                  <strong>{{ class.subject }}</strong><br />
+                  Dept: {{ class.department }}<br />
+                  Section: {{ class.section }}<br />
+                  Semester: {{ class.semester }}
+                </span>
+              </span>
+              {% else %}
+              <span class="empty-slot">–</span>
+              {% endif %}
+            </td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- MOBILE VIEW (Visible on Small Screens) -->
+    <div class="mobile-view">
+      <!-- Day Navigation -->
+      <nav class="day-selector">
+        {% for day in days %}
+        <button class="day-btn" data-day="{{ day }}">
+          {{ day|slice:":3" }}
+        </button>
+        {% endfor %}
+      </nav>
+
+      <!-- Timetable for selected day -->
+      <section id="mobile-timetable" class="timetable-cards">
+        <!-- JS will inject subject cards here -->
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Schedule JSON for JS -->
+<script>
+  const days = JSON.parse("{{ days_json|safe }}");
+  const schedule = JSON.parse("{{ schedule_json|safe }}");
+  const timeSlots = JSON.parse("{{ time_slots|safe }}");
+  console.log("Schedule from Django:", schedule);
+  console.log("Schedule from Django:", days);
+  console.log("Schedule from Django:", timeSlots);
+</script>
+
+{% endblock %}

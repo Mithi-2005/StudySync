@@ -1,0 +1,85 @@
+{% extends "../teacher/index.html" %}
+{% block content %}
+<h1 class="page-heading">Attendance Entry</h1>
+<div class="parent-div">
+  <!-- Left Side: Attendance Controls + Table -->
+  <div class="table-section">
+    <div class="default-status-container">
+      <label for="default-status"><strong>Default Status:</strong></label>
+      <select id="default-status" onchange="handleDefaultStatusChange(this.value)">
+        <option value="P" selected>Present</option>
+        <option value="A">Absent</option>
+      </select>
+    </div>
+
+    <table class="attendance-table">
+      <thead>
+        <tr>
+          <th>S.NO</th>
+          <th>Roll Number</th>
+          <th>Name</th>
+          <th>Section</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tbody>
+          {% for student in students %}
+          {% if student.3 == "A" %}
+            <tr class="student absent">
+              <td>{{ forloop.counter }}</td>
+              <td>{{ student.0 }}</td> <!-- reg_no -->
+              <td>{{ student.1 }}</td> <!-- name -->
+              <td>{{ student.2 }}</td> <!-- section -->
+              <td class="status">A</td>
+            </tr>
+          {% else %}
+            <tr class="student present">
+              <td>{{ forloop.counter }}</td>
+              <td>{{ student.0 }}</td>
+              <td>{{ student.1 }}</td>
+              <td>{{ student.2 }}</td>
+              <td class="status">P</td>
+            </tr>
+          {% endif %}
+{% endfor %}
+        
+        </tbody>
+      </tbody>
+    </table>
+    <div id="attendance-data"
+     data-code="{{ course_details.course_code }}"
+     data-section="{{ section }}"
+     data-semester="{{ course_details.semester }}"
+     data-date="{{ selected_date }}"
+     data-type="{{ selected_type }}">
+</div>
+
+  </div>
+
+  <!-- Right Side: Info Panels -->
+  <div class="right-panels">
+    <div class="course-details">
+      <h3 class="panel-heading">Course Details</h3>
+      <div class="panel-content">
+        <p><strong>Course:</strong> {{ course_details.course_name }}</p>
+        <p><strong>Code:</strong> {{ course_details.course_code }}</p>
+        <p><strong>Instructor:</strong> {{ course_details.faculty_name }}</p>
+        <p><strong>Semester:</strong> {{ course_details.semester }}</p>        
+    </div>
+    </div>
+
+    <div class="summary">
+      <h3 class="panel-heading">Attendance Summary</h3>
+      <div class="stats panel-content">
+        <p><strong>Present:</strong> <span id="present-count">0</span></p>
+        <p><strong>Absent:</strong> <span id="absent-count">0</span></p>
+        <p><strong>Total:</strong> <span id="total-count">0</span></p>
+      </div>
+    </div>
+    <div class="save-attendance-btn">
+      <button onclick="submitAttendance()">Save Attendance</button>
+    </div>
+  </div>
+</div>
+{% endblock %}

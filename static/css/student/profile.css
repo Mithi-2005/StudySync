@@ -1,0 +1,118 @@
+.profile-container {
+  width: 80%;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+}
+
+.profile-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.profile-tab-button {
+  background: #3D3B8E;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.profile-tab-button:hover {
+  background: #2E2C6F;
+  transform: translateY(-2px);
+}
+
+.profile-tab-button.active {
+  background: #2E2C6F;
+  font-weight: 600;
+  transform: translateY(-2px);
+}
+
+.profile-tab-content {
+  display: none;
+  padding: 25px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  transition: opacity 0.3s ease;
+}
+
+.profile-tab-content.active {
+  display: block;
+  opacity: 1;
+}
+
+.profile-tab-content h2 {
+  color: #3D3B8E;
+  margin-bottom: 20px;
+  font-size: 22px;
+  border-bottom: 2px solid #3D3B8E;
+  padding-bottom: 10px;
+}
+
+.profile-info p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.profile-info p strong {
+  color: #3D3B8E;
+}
+
+.profile-academic-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.profile-academic-item {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid #3D3B8E;
+}
+
+.profile-academic-item label {
+  font-weight: bold;
+  color: #3D3B8E;
+  display: block;
+  /* margin-bottom: 5px; */
+}
+
+.profile-academic-item span {
+  font-size: 16px;
+  color: #555;
+}
+
+.profile-back-btn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  color: #3D3B8E;
+  background: #f0f0f0;
+  padding: 8px 14px;
+  border-radius: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.profile-back-btn:hover {
+  background: #e0e0ff;
+  transform: translateY(-2px);
+}

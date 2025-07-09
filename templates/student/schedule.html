@@ -1,0 +1,45 @@
+{% extends "../index.html" %} {% block content %}
+<div class="timetable-container">
+  <!-- Laptop View (Full Week Table) -->
+  <div class="laptop-view">
+    <!-- Timetable -->
+    <div class="timetable-grid">
+      <div class="timetable-header">
+        <div>Time</div>
+        <div>Monday</div>
+        <div>Tuesday</div>
+        <div>Wednesday</div>
+        <div>Thursday</div>
+        <div>Friday</div>
+        <div>Saturday</div>
+      </div>
+      <div id="timetable-body">
+        <div class="row"></div>
+      </div>
+    </div>
+
+    <!-- Course Details Table (Laptop View Only) -->
+  </div>
+
+  <!-- Mobile View (Day Selection & Timetable) -->
+  <div class="mobile-view">
+    <div class="day-selector">
+      <button class="day-btn" data-day="Monday">Mon</button>
+      <button class="day-btn" data-day="Tuesday">Tue</button>
+      <button class="day-btn" data-day="Wednesday">Wed</button>
+      <button class="day-btn" data-day="Thursday">Thu</button>
+      <button class="day-btn" data-day="Friday">Fri</button>
+      <button class="day-btn" data-day="Saturday">Sat</button>
+    </div>
+    <div id="mobile-timetable">
+      <div class="course-card">
+        <div class="course-info">
+          <h3>ENGINEERING MATHEMATICS - III</h3>
+          <p>Veena Narayanan</p>
+        </div>
+        <div class="course-time"><span>8:45am</span> - <span>9:45am</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

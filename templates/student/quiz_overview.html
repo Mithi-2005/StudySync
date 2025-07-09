@@ -1,0 +1,52 @@
+{% extends 'index.html'%}
+{% block content %}
+<div class="overview-container">
+    <div class="quiz-header">
+        <h1>{{ quiz.name }}</h1>
+        <p class="quiz-description">{{ quiz.description }}</p>
+    </div>
+    
+    <div class="quiz-details">
+        <div class="detail-card">
+            <h3>Course Information</h3>
+            <p><strong>Course Code:</strong> {{ quiz.course_code }}</p>
+            <p><strong>Department:</strong> {{ quiz.department }}</p>
+            <p><strong>Semester:</strong> {{ quiz.semester }}</p>
+        </div>
+        
+        <div class="detail-card">
+            <h3>Quiz Parameters</h3>
+            <p><strong>Time Limit:</strong> {{ quiz.time_limit }} minutes</p>
+            <p><strong>Total Marks:</strong> {{ quiz.total_marks }}</p>
+            <p><strong>Available Until:</strong> {{ quiz.end_date|date:"F j, Y H:i" }}</p>
+        </div>
+    </div>
+
+    <form method="post" action="{% url 'quizzes:start_quiz' quiz.quiz_id %}" id="startQuizForm">
+        {% csrf_token %}
+        <button type="submit" class="start-button" id="startQuizBtn">
+            <span class="button-text">Start Quiz</span>
+            <span class="warning-text">Note: Timer starts immediately</span>
+        </button>
+    </form>
+</div>
+<script>
+    var btn = document.getElementById("startQuizBtn");
+  var form = document.getElementById("startQuizForm");
+
+  btn.addEventListener("click", () => {
+    const elem = document.documentElement;
+
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen().then(() => {
+        form.submit(); // Submit the form after fullscreen is triggered
+      }).catch(err => {
+        console.warn("Fullscreen failed:", err);
+        form.submit(); // Still submit the form even if fullscreen fails
+      });
+    } else {
+      form.submit(); // Fallback
+    }
+  });
+</script>
+{% endblock content %}

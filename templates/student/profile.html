@@ -1,0 +1,44 @@
+{% extends "../index.html" %}
+{% block content %}
+<div class="profile-container">
+  <a href="../dashboard" class="profile-back-btn">Return to Dashboard &larr;</a>
+  <div class="profile-tabs">
+    <button class="profile-tab-button active" data-tab="basic-info">Basic Information</button>
+    <button class="profile-tab-button" data-tab="academic-details">Academic Details</button>
+  </div>
+
+  <div class="profile-tab-content active" id="basic-info">
+    <h2>Basic Information</h2>
+    <div class="profile-info">
+      <p><strong>Name:</strong> {{ user.name }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Address:</strong> {{ user.address }}</p>
+      <p><strong>City:</strong> {{ user.city }}</p>
+      <p><strong>State:</strong> {{ user.state }}</p>
+      <p><strong>ZIP Code:</strong> {{ user.zip }}</p>
+    </div>
+  </div>
+
+  <div class="profile-tab-content" id="academic-details">
+    <h2>Academic Details</h2>
+    <div class="profile-academic-container">
+      <div class="profile-academic-item">
+        <label>Enrollment Number:</label>
+        <span>{{ student.enrollment_no }}</span>
+      </div>
+      <div class="profile-academic-item">
+        <label>Course:</label>
+        <span>{{ student.course }}</span>
+      </div>
+      <div class="profile-academic-item">
+        <label>Department:</label>
+        <span>{{ student.department }}</span>
+      </div>
+      <div class="profile-academic-item">
+        <label>Current Semester:</label>
+        <span>{{ student.current_semester }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

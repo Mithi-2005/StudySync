@@ -1,0 +1,228 @@
+/* General Styling */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.header {
+  background-color: #3F2A74;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 22px;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+.section-title {
+  color: #1E1E2D;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+/* Timetable Table */
+.timetable {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  table-layout: fixed;
+}
+
+.timetable th,
+.timetable td {
+  padding: 14px;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+  vertical-align: middle;
+  font-size: 14px;
+  height: 80px;
+  width: 130px;
+}
+
+.timetable th {
+  background-color: #3F2A74;
+  color: white;
+  font-size: 16px;
+}
+
+.time-slot {
+  background-color: #f0f0f5;
+  font-weight: bold;
+}
+
+/* Tooltip */
+.tooltip-wrapper {
+  position: relative;
+  cursor: help;
+  font-weight: bold;
+  color: #3F2A74;
+}
+
+.tooltip-content {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffffff;
+  color: #333;
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  font-size: 13px;
+  width: 180px;
+  text-align: left;
+}
+
+.class-cell:hover .tooltip-content {
+  display: block;
+}
+
+.empty-slot {
+  color: #ccc;
+  font-style: italic;
+}
+.mobile-view{
+  display: none;
+}
+
+/* MOBILE VIEW */
+@media (max-width: 768px) {
+  .laptop-view {
+    display: none;
+  }
+
+  .mobile-view {
+    display: block;
+    padding: 1rem;
+    background-color: #f9fafc;
+  }
+
+  /* Day Selector */
+  .day-selector {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  .day-btn {
+    flex-shrink: 0;
+    padding: 8px 12px;
+    background: #3F2A74;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .day-btn.active {
+    background-color: #1a237e;
+  }
+
+  .day-btn:hover {
+    background: #281B5A;
+  }
+
+  /* Timetable Cards */
+  .timetable-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .mobile-slot {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: white;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.mobile-slot:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Slot Header - Time and Room */
+.slot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    font-weight: bold;
+    color: #2D2E83; /* Dark Purple */
+}
+.slot-main{
+  display: flex;
+  min-width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.slot-room-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 30%;
+  flex-grow: 1;
+}
+.slot-time {
+  flex: 1; /* Takes available space */
+  text-align: left;
+}
+.slot-room {
+    background: #605BFF;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    text-align: center;
+    min-width: 50px;
+}
+
+/* Collapsible Details */
+.slot-details {
+    font-size: 13px;
+    color: #333;
+    opacity: 0;
+    height: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Expand Slot on Click */
+.mobile-slot.active {
+    background: #f3f1ff; /* Light purple */
+    border-left: 5px solid #605BFF;
+}
+
+.mobile-slot.active .slot-details {
+    opacity: 1;
+    height: auto;
+    transform: scaleY(1);
+    margin-top: 8px;
+}
+
+/* Empty Slot */
+.mobile-slot.empty {
+    background: #f8f8f8;
+    color: #777;
+    text-align: center;
+    /* pointer-events: none; */
+}
+
+}

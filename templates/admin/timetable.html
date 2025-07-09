@@ -1,0 +1,89 @@
+{% extends "../admin/index.html" %} {% block content %}
+
+<div class="container">
+  <h2>Manage Timetable</h2>
+  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+  <!-- Dropdown Filters -->
+  <div class="filters">
+    <select id="department" onchange="loadSemesters()">
+      <option value="">Select Department</option>
+      <!-- Dynamic options will be loaded here -->
+    </select>
+
+    <select id="semester" onchange="loadSections()">
+      <option value="">Select Semester</option>
+      <!-- Dynamic options will be loaded here -->
+    </select>
+
+    <select id="section">
+      <option value="">Select Section</option>
+      <!-- Dynamic options will be loaded here -->
+    </select>
+
+    <button onclick="loadTimetable()">Load Timetable</button>
+  </div>
+
+  <!-- Timetable Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>Day</th>
+        <th>Period</th>
+        <th>Subject</th>
+        <th>Faculty</th>
+        <th>Room</th>
+        <th>Time Slot</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="timetable-body">
+      <!-- Timetable data will be inserted here -->
+    </tbody>
+  </table>
+
+  <!-- Add Slot Button -->
+  <button class="add-btn" onclick="openAddSlotPopup()">+ Add Slot</button>
+
+  <!-- Add Slot Popup -->
+  <div class="popup" id="addSlotPopup">
+    <div class="popup-content">
+      <h3>Add Timetable Slot</h3>
+      <input type="hidden" id="slot-id">
+      <label>Day:</label>
+      <select id="slot-day">
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+        <option value="Saturday">Saturday</option>
+      </select>
+
+      <label>Period:</label>
+      <input type="number" id="slot-period" min="1" required />
+
+      <label>Subject:</label>
+      <select id="slot-subject" required>
+        <!-- Dynamic options will be loaded here -->
+      </select>
+
+      <label>Faculty ID:</label>
+      <select id="slot-faculty">
+        <option value="">Select Faculty</option>
+        <!-- Dynamic options will be loaded here -->
+      </select>
+
+      <label>Room No:</label>
+      <input type="text" id="slot-room" required />
+
+      <label>Time Slot:</label>
+      <input type="text" id="slot-time" required />
+
+      <div class="popup-buttons">
+        <button id="save-slot-btn" onclick="addSlot()">Add</button>
+        <button onclick="closePopup()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

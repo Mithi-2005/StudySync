@@ -1,0 +1,170 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="forms-section">
+  <div class="forms-toggle">
+    <button id="account-btn" class="toggle-btn active">Account Settings</button>
+    <button id="notifications-btn" class="toggle-btn">Notification Settings</button>
+    <button id="about-btn" class="toggle-btn">About</button>
+  </div>
+
+  <!-- Account Settings Section -->
+  <div id="account-settings" class="forms-container">
+    <h2>Account Settings</h2>
+    <form action="/settings/account/" method="POST">
+      {% csrf_token %}
+
+      <!-- Row 1 -->
+      <div class="form-row three-col">
+        <div class="forms-group">
+          <label for="acc_name">Full Name:</label>
+          <input type="text" id="acc_name" name="name" value="{{ student.name }}" required>
+        </div>
+        <div class="forms-group">
+          <label for="acc_email">Email:</label>
+          <input type="email" id="acc_email" name="email" value="{{ student.email }}" required>
+        </div>
+        <div class="forms-group password-group">
+          <label for="acc_password">Password:</label>
+          <input type="password" id="acc_password" name="password" placeholder="Leave blank to keep current password">
+          
+          <div class="show-password-wrapper">
+            <input type="checkbox" id="toggle-password">
+            <label for="toggle-password">Show Password</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="form-row three-col">
+        <div class="forms-group">
+          <label for="acc_regid">Registration ID:</label>
+          <input type="text" id="acc_regid" name="registration_id" value="{{ student.reg_no }}" readonly>
+        </div>
+        <div class="forms-group">
+          <label for="acc_department">Department:</label>
+          <input type="text" id="acc_department" name="department" value="{{ student.department }}" readonly>
+        </div>
+        <div class="forms-group">
+          <label for="acc_year">Year:</label>
+          <input type="text" id="acc_year" name="year" value="{{ student.admission_year }}" readonly>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="form-row three-col">
+        <div class="forms-group">
+          <label for="acc_semester">Semester:</label>
+          <input type="text" id="acc_semester" name="semester" value="{{ student.semester }}" readonly>
+        </div>
+        <div class="forms-group">
+          <label for="acc_section">Section:</label>
+          <input type="text" id="acc_section" name="section" value="{{ student.section }}" readonly>
+        </div>
+        <div class="forms-group">
+          <label for="acc_college">College:</label>
+          <input type="text" id="acc_college" name="college" value="{{ student.college }}" readonly>
+        </div>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="form-row three-col">
+        <div class="forms-group">
+          <label for="acc_dob">Date of Birth:</label>
+          <input type="date" id="acc_dob" name="dob" value="{% if student.dob %}{{ student.dob|date:'Y-m-d' }}{% endif %}" readonly>
+        </div>
+        <div class="forms-group">
+          <label for="acc_gender">Gender:</label>
+          <input type="text" id="acc_gender" name="gender" value="{{ student.gender }}" readonly>
+        </div>
+        <div class="forms-group">
+          <label for="acc_mobile">Mobile Number:</label>
+          <div class="input-group">
+            <select id="acc_mobile_code" name="mobile_code" class="admin-select" required>
+              <option value="+91" selected>+91</option>
+            </select>
+            <input type="text" id="acc_mobile" name="mobile" value="{{ student.mobile }}" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 5 -->
+      <div class="form-row three-col">
+        <div class="forms-group">
+          <label for="acc_address">Address:</label>
+          <input type="text" id="acc_address" name="address" value="{{ student.address }}" required>
+        </div>
+        <div class="forms-group">
+          <label for="acc_country">Country:</label>
+          <select id="acc_country" name="country" class="admin-select" required>
+            <option value="India" {% if student.country == "India" %}selected{% endif %}>India</option>
+            <option value="Nepal" {% if student.country == "Nepal" %}selected{% endif %}>Nepal</option>
+            <option value="Japan" {% if student.country == "Japan" %}selected{% endif %}>Japan</option>
+            <option value="China" {% if student.country == "China" %}selected{% endif %}>China</option>
+            <option value="Nigeria" {% if student.country == "Nigeria" %}selected{% endif %}>Nigeria</option>
+            <option value="Pakistan" {% if student.country == "Pakistan" %}selected{% endif %}>Pakistan</option>
+            <option value="Bangladesh" {% if student.country == "Bangladesh" %}selected{% endif %}>Bangladesh</option>
+          </select>
+        </div>
+        <div class="forms-group" id="acc_state_container">
+          <label for="acc_state">State:</label>
+          <select id="acc_state" name="state" class="admin-select" required>
+            <option value="">Select State</option>
+            {% for state_option in states %}
+              <option value="{{ state_option }}" 
+                {% if state_option == student.state %}selected{% endif %}>
+                {{ state_option }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 6 -->
+      <div class="form-row three-col">
+        <div class="forms-group">
+          <label for="acc_city">City:</label>
+          <input type="text" id="acc_city" name="city" value="{{ student.city }}" required>
+        </div>
+        <div class="forms-group">
+          <label for="acc_pincode">Pincode:</label>
+          <input type="text" id="acc_pincode" name="pincode" value="{{ student.pincode }}" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Save Changes</button>
+    </form>
+  </div>
+
+  <!-- Notification Settings -->
+  <div id="notification-settings" class="forms-container" style="display: none;">
+    <h2>Notification Settings</h2>
+    <form action="/settings/notifications/" method="POST">
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="forms-group full-width">
+          <label for="email-notify">
+            <input type="checkbox" id="email-notify" checked>
+            Email Notifications
+          </label>
+        </div>
+        
+        <div class="forms-group full-width">
+          <label><input type="checkbox" name="sms_notifications"> Enable SMS Notifications</label>
+        </div>
+      </div>
+      <button type="submit" class="btn-submit">Update Preferences</button>
+    </form>
+  </div>
+
+  <!-- About -->
+  <div id="about-settings" class="forms-container" style="display: none;">
+    <h2>About</h2>
+    <p>This system allows administrators, lecturers, and students to manage academic and user-related operations efficiently.</p>
+    <p>Version: 1.0.0</p>
+    <p>Developed by: Your Team Name</p>
+  </div>
+</div>
+
+{% endblock %}

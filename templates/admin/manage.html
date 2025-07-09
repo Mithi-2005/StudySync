@@ -1,0 +1,184 @@
+{% extends "../admin/index.html" %} {% block content %}
+<div class="manage-main">
+  <div class="manage-page">
+    <div id="deleteMessage" class="hidden delete-msg">
+      ✅ User removed successfully!
+  </div>
+    <h1>Manage Users</h1>
+    <div class="tabs">
+      <button id="teachersTab" class="active">Teachers</button>
+      <button id="studentsTab">Students</button>
+    </div>
+
+    <!-- Filters Container -->
+    <div class="filters-container">
+      <div class="left-filters">
+        <select id="departmentFilter">
+          <option value="">All Departments</option>
+        </select>
+        <select id="sectionOrDesignationFilter">
+          <option value="">All Sections/Designations</option>
+        </select>
+        <select id="semesterFilter" style="display: none">
+          <!-- Hide initially (for students only) -->
+          <option value="">All Semesters</option>
+        </select>
+      </div>
+
+      <div class="right-search">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search by Name or ID"
+        />
+      </div>
+    </div>
+
+    <!-- Teachers Section -->
+    <div id="teachersContent" class="tab-content active">
+      <div class="header">
+        <h2>Teachers</h2>
+        <button
+          class="create-btn"
+          onclick="location.href='../adduser/#lecturer-form'"
+        >
+          Add Teacher
+        </button>
+      </div>
+      <table class="assessments-table">
+        <thead>
+          <tr>
+            <th>Teacher ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Designation</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="teachersTableBody"></tbody>
+      </table>
+      <div id="teachersPaginationContainer" class="pagination-container"></div>
+    </div>
+
+    <!-- Students Section -->
+    <div id="studentsContent" class="tab-content">
+      <div class="header">
+        <h2>Students</h2>
+        <button
+          class="create-btn"
+          onclick="location.href='../adduser/#student-form'"
+        >
+          Add Student
+        </button>
+      </div>
+      <table class="assessments-table">
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Section</th>
+            <th>Semester</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="studentsTableBody"></tbody>
+      </table>
+      <div id="studentsPaginationContainer" class="pagination-container"></div>
+    </div>
+  </div>
+  <!-- Edit Modal -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Edit User</h2>
+      <div id="successMessage" class="hidden success-msg">
+        ✅ User updated successfully!
+    </div>
+    
+    <div id="errorMessage" class="hidden error-msg">
+        ❌ Failed to update user. Please try again!
+    </div>
+    
+    
+    
+      <form id="editForm" method="POST">
+        <div class="form-group">
+          <div>
+            <label for="editUserId">User ID:</label>
+            <input type="text" id="editUserId" name="id" readonly />
+          </div>
+          <div>
+            <label for="editName">Name:</label>
+            <input type="text" id="editName" name="name" readonly />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div>
+            <label for="editRole">Role:</label>
+            <input type="text" id="editRole" name="role" readonly />
+          </div>
+          <div>
+            <label for="editDepartment">Department:</label>
+            <input type="text" id="editDepartment" name="department" readonly />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div>
+            <label for="editEmail">Email:</label>
+            <input type="email" id="editEmail" name="email" required />
+          </div>
+          <div>
+            <label for="editMobile">Mobile No:</label>
+            <input type="text" id="editMobile" name="mobile" required />
+          </div>
+        </div>
+
+        <label for="editAddress">Address:</label>
+        <textarea id="editAddress" name="address" required></textarea>
+
+        <div class="form-group">
+          <div>
+            <label for="editCity">City:</label>
+            <input type="text" id="editCity" name="city" required />
+          </div>
+          <div>
+            <label for="editState">State:</label>
+            <input type="text" id="editState" name="state" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div>
+            <label for="editCountry">Country:</label>
+            <input type="text" id="editCountry" name="country" required />
+          </div>
+          <div>
+            <label for="editPincode">Pincode:</label>
+            <input type="text" id="editPincode" name="pincode" required />
+          </div>
+        </div>
+
+        <div id="studentFields" class="form-group" style="display: none;">
+          <div>
+            <label for="editSemester">Semester:</label>
+            <input type="text" id="editSemester" name="semester" readonly />
+          </div>
+          <div>
+            <label for="editSection">Section:</label>
+            <input type="text" id="editSection" name="section" readonly />
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button type="submit">Update</button>
+          <!-- <button type="button" class="close">Cancel</button> -->
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

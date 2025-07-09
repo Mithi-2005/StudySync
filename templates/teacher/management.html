@@ -1,0 +1,452 @@
+{% extends "../teacher/index.html" %} {% block content %} {% load static %}
+
+<!-- Modern Header with Gradient -->
+<div class="management">
+  <!-- Classroom Grid -->
+  <h1>Classrooms</h1>
+  <div class="classrooms-container">
+    {% if classrooms %} {% for c in classrooms %}
+    <!-- Classroom Card with Hover Animation -->
+    <div
+      class="classroom-card"
+      data-aos="fade-up"
+      data-code="{{c.1}}"
+      onclick="gotoClass('{{c.1}}')"
+    >
+      <div class="card-header">
+        <div class="class-name">
+          <h3>{{ c.2 }}</h3>
+        </div>
+        <div class="card-actions">
+          <div class="class-code-wrapper">
+            <span class="class-code">{{ c.1 }}</span>
+            <button
+              class="copy-btn"
+              onclick="copyToClipboard(event,'{{ c.1 }}', this)"
+            >
+              <svg
+                class="copy-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"
+                ></path>
+              </svg>
+              <span class="tooltip">Copy</span>
+            </button>
+          </div>
+
+          <!-- Action Menu Trigger -->
+          <div class="action-menu">
+            <button class="menu-btn" onclick="toggleMenu(event,this)">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <circle cx="12" cy="12" r="1"></circle>
+                <circle cx="12" cy="5" r="1"></circle>
+                <circle cx="12" cy="19" r="1"></circle>
+              </svg>
+            </button>
+            <div class="menu-dropdown">
+              <button onclick="openEditPopup(event,'{{c.2}}','{{c.1}}')" class="menu-item1">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <path
+                    d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"
+                  ></path>
+                  <path
+                    d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"
+                  ></path>
+                </svg>
+                Edit
+              </button>
+              <button
+                class="menu-item1 delete-btn"
+                onclick="confirmDelete(event,'{{ c.1 }}')"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <path d="M3 6h18"></path>
+                  <path
+                    d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"
+                  ></path>
+                </svg>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="meta-item">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+          </svg>
+          <span>{{ c.3 }}</span>
+        </div>
+        <div class="meta-item">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          </svg>
+          <span>{{ c.4 }} • Sem {{ c.5 }} • Sec {{ c.6 }}</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <span class="date">{{ c.7 }}</span>
+        <div class="students-count">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span>{{c.8}} Students</span>
+          <!-- Replace with actual count -->
+        </div>
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <!-- Empty State -->
+    <div class="empty-state" data-aos="fade-in">
+      <svg
+        width="120"
+        viewBox="0 0 839 602"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M648.251 282.526C648.251 434.763 522.763 560.251 370.526 560.251C218.288 560.251 92.8008 434.763 92.8008 282.526C92.8008 130.288 218.288 4.80078 370.526 4.80078C522.763 4.80078 648.251 130.288 648.251 282.526Z"
+          fill="#F2F2F2"
+        />
+        <path
+          d="M639.251 282.526C639.251 430.481 518.481 551.251 370.526 551.251C222.57 551.251 101.801 430.481 101.801 282.526C101.801 134.57 222.57 13.8008 370.526 13.8008C518.481 13.8008 639.251 134.57 639.251 282.526Z"
+          fill="white"
+        />
+        <path
+          d="M584.251 282.526C584.251 403.199 487.199 500.251 366.526 500.251C245.852 500.251 148.801 403.199 148.801 282.526C148.801 161.852 245.852 64.8008 366.526 64.8008C487.199 64.8008 584.251 161.852 584.251 282.526Z"
+          fill="#F2F2F2"
+        />
+        <path
+          d="M257.801 240.526H475.251V242.526H257.801V240.526Z"
+          fill="#E6E6E6"
+        />
+        <path
+          d="M257.801 266.526H475.251V268.526H257.801V266.526Z"
+          fill="#E6E6E6"
+        />
+        <path
+          d="M257.801 292.526H411.251V294.526H257.801V292.526Z"
+          fill="#E6E6E6"
+        />
+      </svg>
+      <h3>No Classrooms Yet</h3>
+      <p>Create your first classroom to get started</p>
+      <button class="create-btn" onclick="openPopup()">Create Classroom</button>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Floating Action Button -->
+  <button class="fab" onclick="openPopup()">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+    >
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+  </button>
+
+  <!-- Classroom Creation Popup -->
+  <div id="createPopup" class="popup-overlay">
+    <div class="popup-content">
+      <div class="form-container">
+        <button class="close-popup" onclick="closePopup()">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="form-header">
+          <svg
+            class="form-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path d="M12 3v18m-9-9h18m-4-7v14m-10-4v4"></path>
+          </svg>
+          <h2>Create New Classroom</h2>
+          <p>Fill in the details to create a learning space</p>
+         
+        </div>
+
+        <form action="/teacher/create_classroom/" method="POST">
+          {% csrf_token %}
+
+          <div class="input-group">
+            <label for="class_name">Class Name</label>
+            <div class="input-field">
+              <svg
+                class="input-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                ></path>
+              </svg>
+              <input
+                type="text"
+                id="class_name"
+                name="class_name"
+                placeholder="Enter class name"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="department">Department</label>
+            <div class="input-field">
+              <svg
+                class="input-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                ></path>
+              </svg>
+              <select
+                name="department"
+                id="department"
+                onchange="loadSemesters()"
+                required
+              >
+                <option value="" disabled selected>Select Semester</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="semester">Semester</label>
+            <div class="input-field">
+              <svg
+                class="input-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <select
+                name="semester"
+                id="semester"
+                onchange="loadSections()"
+                required
+              >
+                <option value="" disabled selected>Select Semester</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="section">Section</label>
+            <div class="input-field">
+              <svg
+                class="input-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                ></path>
+              </svg>
+              <select
+                name="section"
+                id="section"
+                onchange="loadCourses()"
+                required
+              >
+                <option value="" disabled selected>Select Semester</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-group">
+            <label for="course_code">Course Code</label>
+            <div class="input-field">
+              <svg
+                class="input-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"
+                ></path>
+                <path d="M13 2v7h7"></path>
+              </svg>
+              <select name="course_code" id="course_code" required>
+                <option value="" disabled selected>Select Course</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"
+              ></path>
+            </svg>
+            Create Classroom
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div id="editClassPopup" class="popup-overlay">
+    <div class="popup-content">
+      <div class="form-container">
+        <button class="close-popup" onclick="closeEditPopup()">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <div class="form-header">
+          <svg
+            class="form-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path
+              d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"
+            ></path>
+            <path
+              d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"
+            ></path>
+          </svg>
+          <h2>Edit Classroom</h2>
+          <p>Update your classroom details</p>
+          
+        </div>
+
+        <form
+          action="/teacher/classroom/{{ classroom.class_code }}/edit/"
+          method="POST"
+          class="edit-class-form"
+        >
+          {% csrf_token %}
+
+          <div class="input-group">
+            <label for="edit_class_name">Classroom Name</label>
+            <div class="input-field">
+              <svg
+                class="input-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+                ></path>
+              </svg>
+              <input
+                type="text"
+                id="edit_class_name"
+                name="class_name"
+                value="{{ classroom.class_name }}"
+                placeholder="Enter new classroom name"
+                minlength="3"
+                maxlength="50"
+                required
+              />
+              <div class="invalid-feedback">Please provide a valid name (3-50 characters)</div>
+            </div>
+          </div>
+
+          <button type="submit" class="submit-btn">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"
+              ></path>
+              <path d="M17 21v-8H7v8"></path>
+              <path d="M7 3v5h8"></path>
+            </svg>
+            Save Changes
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+</div>
+<div id="toastContainer"></div>
+
+{% endblock %}

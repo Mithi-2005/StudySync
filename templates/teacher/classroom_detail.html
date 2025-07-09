@@ -1,0 +1,18 @@
+{% extends '../teacher/index.html' %}
+{% block content %}
+<div class="classroom-container">
+  <h2>{{ classroom.class_name }}</h2>
+  <p><strong>Course Code:</strong> {{ classroom.course_code }}</p>
+  <p><strong>Department:</strong> {{ classroom.department }}</p>
+  <p><strong>Semester:</strong> {{ classroom.semester }} - Section {{ classroom.section }}</p>
+  <p><strong>Faculty:</strong> {{ classroom.faculty_name }}</p>
+
+  <hr>
+
+  <div class="posts-section">
+    <h3>Posts</h3>
+    <!-- Post list will appear here -->
+    <p>No posts yet.</p> <!-- Replace this once post feed is ready -->
+  </div>
+</div>
+{% endblock %}

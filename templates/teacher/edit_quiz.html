@@ -1,0 +1,298 @@
+{% extends '../teacher/index.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="edit-quiz-container">
+        <h1 class="edit-quiz-heading">Edit Quiz: {{ quiz.quiz_id }}</h1>
+
+        <div class="quiz-id-display">
+            <span class="quiz-id-label">Quiz ID:</span>
+            <span class="quiz-id-value">{{ quiz.quiz_id }}</span>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Edit Quiz Main Info Form -->
+        <form method="post" class="quiz-form">
+            {% csrf_token %}
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Quiz Name</label>
+                    <input type="text" name="name" class="form-input" value="{{ quiz.name }}" required>
+                </div>
+                
+                <!-- Dynamic Department Dropdown -->
+                <div class="form-group">
+                    <label>Department</label>
+                    <select name="department" id="department" class="form-input" required>
+                        <option value="">Select Department</option>
+                    </select>
+                </div>
+                
+                <!-- Dynamic Semester Dropdown -->
+                <div class="form-group">
+                    <label>Semester</label>
+                    <select name="semester" id="semester" class="form-input" required>
+                        <option value="">Select Semester</option>
+                    </select>
+                </div>
+                
+                <!-- Dynamic Course Code Dropdown -->
+                <div class="form-group">
+                    <label>Course Code</label>
+                    <select name="course_code" id="course" class="form-input" required>
+                        <option value="">Select Course</option>
+                    </select>
+                </div>
+                
+                <!-- Dynamic Section Dropdown -->
+                <div class="form-group">
+                    <label>Section</label>
+                    <select name="section" id="section" class="form-input" required>
+                        <option value="">Select Section</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Total Marks</label>
+                    <input type="number" name="total_marks" class="form-input" value="{{ quiz.total_marks }}" required>
+                </div>
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input type="datetime-local" name="start_date" value="{{ quiz.start_date|date:'Y-m-d\\TH:i' }}" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label>End Date</label>
+                    <input type="datetime-local" name="end_date" value="{{ quiz.end_date|date:'Y-m-d\\TH:i' }}" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label>Faculty ID</label>
+                    <input type="text" name="faculty_id" class="form-input" value="{{ quiz.faculty_id }}" readonly required>
+                </div>
+                <div class="form-group">
+                    <label>Total Questions</label>
+                    <input type="number" name="total_questions" class="form-input" value="{{ quiz.total_questions }}" required>
+                </div>
+                <div class="form-group full-width">
+                    <label>Description</label>
+                    <textarea name="description" class="form-input" rows="4">{{ quiz.description }}</textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-save">Save Changes</button>
+                <a href="{% url 'teachers:quiz' %}" class="btn btn-cancel">Cancel</a>
+            </div>
+        </form>
+
+        <!-- Edit Questions Section -->
+        <div class="edit-questions-section">
+            <h2>Edit Questions</h2>
+            {% if questions %}
+            <form method="post" action="{% url 'quizzes:update_quiz_questions' quiz.quiz_id %}">
+                {% csrf_token %}
+                <ol class="question-edit-list">
+                    {% for question in questions %}
+                    <li class="question-edit-item">
+                        <!-- Hidden field to carry question type value -->
+                        <input type="hidden" name="question_type_{{ forloop.counter }}" value="{{ question.question_type }}">
+                        <input type="hidden" name="question_id_{{ forloop.counter }}" value="{{ question.id }}">
+
+                        <div class="question-header">
+                            <label>Question {{ forloop.counter }}</label>
+                            <textarea name="question_text_{{ forloop.counter }}" class="form-input" rows="2" required>{{ question.question_text }}</textarea>
+                        </div>
+
+                        <div class="question-config">
+                            <div class="form-group">
+                                <label>Type:</label>
+                                <!-- Disabled select displaying question type -->
+                                <select class="form-input" disabled>
+                                    <option value="blank" {% if question.question_type == "blank" %}selected{% endif %}>Blank</option>
+                                    <option value="options" {% if question.question_type == "options" %}selected{% endif %}>Single Choice</option>
+                                    <option value="multi" {% if question.question_type == "multi" %}selected{% endif %}>Multiple Choice</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Marks:</label>
+                                <input type="number" name="marks_{{ forloop.counter }}" class="form-input" value="{{ question.marks }}" required>
+                            </div>
+                        </div>
+
+                        <!-- Options Container (for Options and Multi) -->
+                        <div class="option-fields" style="display: {% if question.question_type == 'blank' %}none{% else %}block{% endif %};">
+                            {% for opt in question.options %}
+                            <div class="option-item">
+                                <input type="text" name="option_text_{{ forloop.parentloop.counter }}_{{ forloop.counter0 }}" class="form-input" value="{{ opt.option_text }}" placeholder="Option {{ forloop.counter }}">
+                                {% if question.question_type == "multi" %}
+                                    <label class="correct-label">
+                                        <input type="checkbox" name="is_correct_{{ forloop.parentloop.counter }}_{{ forloop.counter0 }}" {% if opt.is_correct %}checked{% endif %}>
+                                        Correct
+                                    </label>
+                                {% elif question.question_type == "options" %}
+                                    <label class="correct-label">
+                                        <input type="radio" name="is_correct_{{ forloop.parentloop.counter }}" value="{{ forloop.counter0 }}" {% if opt.is_correct %}checked{% endif %}>
+                                        Correct
+                                    </label>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Correct Answer Container (for Blank type) -->
+                        <div class="correct-answer-field" style="display: {% if question.question_type == 'blank' %}block{% else %}none{% endif %};">
+                            <label>Correct Answer</label>
+                            <input type="text" name="correct_answer_{{ forloop.counter }}" class="form-input" value="{{ question.correct_answer }}">
+                        </div>
+
+                        <div class="question-footer">
+                            <a href="{% url 'quizzes:delete_question' question.id quiz.quiz_id %}" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this question?');">
+                                Remove Question
+                            </a>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ol>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-save">Update Questions</button>
+                </div>
+            </form>
+            {% else %}
+                <p>No questions to edit for this quiz.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Dynamic Dropdown Loading JavaScript -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Default values for dropdowns from backend context
+    var defaultDepartment = "{{ quiz.department }}";
+    var defaultSemester = "{{ quiz.semester }}";
+    var defaultCourse = "{{ quiz.course_code }}";
+    var defaultSection = "{{ quiz.section }}";
+
+    var departmentSelect = document.getElementById("department");
+    var semesterSelect = document.getElementById("semester");
+    var courseSelect = document.getElementById("course");
+    var sectionSelect = document.getElementById("section");
+
+    // Load departments via AJAX
+    fetch("/quizzes/get_departments/")
+        .then(res => res.json())
+        .then(data => {
+            data.departments.forEach(dept => {
+                if (dept == defaultDepartment) {
+                    departmentSelect.innerHTML += `<option value="${dept}" selected>${dept}</option>`;
+                } else {
+                    departmentSelect.innerHTML += `<option value="${dept}">${dept}</option>`;
+                }
+            });
+            // Trigger change to load semesters
+            departmentSelect.dispatchEvent(new Event('change'));
+        });
+
+    // When department changes, load semesters
+    departmentSelect.addEventListener("change", () => {
+        semesterSelect.innerHTML = '<option value="">Select Semester</option>';
+        courseSelect.innerHTML = '<option value="">Select Course</option>';
+        sectionSelect.innerHTML = '<option value="">Select Section</option>';
+        let dept = departmentSelect.value;
+
+        if (dept) {
+            fetch(`/quizzes/get_semesters/?department=${dept}`)
+                .then(res => res.json())
+                .then(data => {
+                    data.semesters.forEach(sem => {
+                        if (sem == defaultSemester) {
+                            semesterSelect.innerHTML += `<option value="${sem}" selected>${sem}</option>`;
+                        } else {
+                            semesterSelect.innerHTML += `<option value="${sem}">${sem}</option>`;
+                        }
+                    });
+                    semesterSelect.dispatchEvent(new Event('change'));
+                });
+        }
+    });
+
+    // When semester changes, load courses
+    semesterSelect.addEventListener("change", () => {
+        courseSelect.innerHTML = '<option value="">Select Course</option>';
+        sectionSelect.innerHTML = '<option value="">Select Section</option>';
+        let dept = departmentSelect.value;
+        let sem = semesterSelect.value;
+
+        if (dept && sem) {
+            fetch(`/quizzes/get_courses/?department=${dept}&semester=${sem}`)
+                .then(res => res.json())
+                .then(data => {
+                    data.courses.forEach(course => {
+                        if (course == defaultCourse) {
+                            courseSelect.innerHTML += `<option value="${course}" selected>${course}</option>`;
+                        } else {
+                            courseSelect.innerHTML += `<option value="${course}">${course}</option>`;
+                        }
+                    });
+                    courseSelect.dispatchEvent(new Event('change'));
+                });
+        }
+    });
+
+    // When course changes, load sections
+    courseSelect.addEventListener("change", () => {
+        sectionSelect.innerHTML = '<option value="">Select Section</option>';
+        let dept = departmentSelect.value;
+        let sem = semesterSelect.value;
+        let course = courseSelect.value;
+
+        if (dept && sem && course) {
+            fetch(`/quizzes/get_sections/?department=${dept}&semester=${sem}&course=${course}`)
+                .then(res => res.json())
+                .then(data => {
+                    data.sections.forEach(sec => {
+                        if (sec == defaultSection) {
+                            sectionSelect.innerHTML += `<option value="${sec}" selected>${sec}</option>`;
+                        } else {
+                            sectionSelect.innerHTML += `<option value="${sec}">${sec}</option>`;
+                        }
+                    });
+                });
+        }
+    });
+});
+</script>
+
+<!-- JavaScript for handling dynamic toggling of question type fields -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize visibility for each question type selector
+    document.querySelectorAll('.question-type-selector').forEach(function(selectElem) {
+        initQuestionVisibility(selectElem);
+        selectElem.addEventListener('change', function() {
+            initQuestionVisibility(this);
+        });
+    });
+
+    function initQuestionVisibility(selectElem) {
+        const li = selectElem.closest('li');
+        const questionType = selectElem.value;
+        const optionFields = li.querySelector('.option-fields');
+        const correctAnswerField = li.querySelector('.correct-answer-field');
+
+        if (questionType === 'blank') {
+            optionFields.style.display = 'none';
+            correctAnswerField.style.display = 'block';
+        } else if (questionType === 'options' || questionType === 'multi') {
+            optionFields.style.display = 'block';
+            correctAnswerField.style.display = 'none';
+        }
+    }
+});
+</script>
+{% endblock %}

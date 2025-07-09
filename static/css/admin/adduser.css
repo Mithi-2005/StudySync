@@ -1,0 +1,196 @@
+/* adduser.css */
+/* Full Merged CSS Code for Forms (scoped under .form-section) */
+.form-section .form-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-section .toggle-btn {
+  background: #e9e9e9;
+  color: #333;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  margin: 0 0.5rem;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.form-section .toggle-btn:hover {
+  background: #dcdcdc;
+}
+
+.form-section .toggle-btn.active {
+  background: #4c52a2;
+  color: #fff;
+}
+
+.form-section .form-container {
+  background: #fff;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-section .form-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #4c52a2;
+  font-size: 1.5rem;
+}
+
+.form-section .form-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.form-section .form-row.three-col .form-group {
+  flex: 0 0 32%;
+  margin-bottom: 1rem;
+}
+
+.form-section .form-row.two-col .form-group {
+  flex: 0 0 48%;
+  margin-bottom: 1rem;
+}
+
+.form-section .form-group.full-width {
+  flex: 0 0 100%;
+  margin-bottom: 1rem;
+}
+
+.form-section .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.form-section .form-group input,
+.form-section .form-group select,
+.form-section .form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-section .form-group input:focus,
+.form-section .form-group select:focus,
+.form-section .form-group textarea:focus {
+  outline: none;
+  border-color: #4c52a2;
+}
+
+.form-section .form-group textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.form-section .input-group {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.form-section .input-group select,
+.form-section .input-group input {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.form-section .input-group select {
+  flex: 0 0 120px;
+  border-right: none;
+  margin-right: 5px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  background: #f9f9f9;
+}
+
+.form-section .input-group input {
+  flex: 1;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.form-section .input-group select:focus,
+.form-section .input-group input:focus {
+  outline: none;
+  border-color: #4c52a2;
+}
+
+.form-section .btn-submit {
+  display: block;
+  width: 100%;
+  background: #4c52a2;
+  color: #fff;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+  margin-top: 1rem;
+}
+
+.form-section .btn-submit:hover {
+  background: #3a4280;
+}
+.messages {
+  margin-bottom: 20px;
+}
+
+.alert {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border-left: 5px solid #28a745;
+}
+
+.alert-error, .alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-left: 5px solid #dc3545;
+}
+
+.alert-info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border-left: 5px solid #17a2b8;
+}
+
+.alert-warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border-left: 5px solid #ffc107;
+}
+
+@media (max-width: 800px) {
+  .form-section .form-row.three-col .form-group,
+  .form-section .form-row.two-col .form-group {
+    flex: 0 0 48%;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-section .form-row.three-col .form-group,
+  .form-section .form-row.two-col .form-group {
+    flex: 0 0 100%;
+  }
+}

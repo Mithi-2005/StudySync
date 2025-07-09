@@ -1,0 +1,254 @@
+/* ADD USER CSS (Styled like the screenshot layout) */
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f3f4f6;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .formt-toggle {
+    display: flex;
+    justify-content: center; /* This centers horizontally */
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+  
+  
+  .toggle-btn {
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  
+  .toggle-btn:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .toggle-btn.active {
+    background-color: #5a4fcf;
+    color: white;
+  }
+  
+  .formt-section {
+    padding: 40px 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  .formt-container {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    padding: 40px;
+  }
+  
+  .formt-container h2 {
+    text-align: center;
+    font-size: 28px;
+    color: #5a4fcf;
+    margin-bottom: 30px;
+  }
+  
+  .form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 30px;
+    margin-bottom: 20px;
+  }
+  
+  .form-row .formt-group {
+    flex: 1 1 30%;
+    min-width: 250px;
+  }
+  
+  .formt-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+  }
+  
+  .formt-group input,
+  .formt-group select,
+  .formt-group textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s ease-in-out;
+  }
+  
+  .formt-group input:focus,
+  .formt-group select:focus,
+  .formt-group textarea:focus {
+    border-color: #5a4fcf;
+  }
+  
+  /* Input Group (Mobile No. with Country Code) */
+  .input-group {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+  
+  .input-group select {
+    flex: 0 0 90px;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .input-group input {
+    flex: 1;
+    border-radius: 0 8px 8px 0;
+  }
+  
+  /* Submit Button */
+  .btn-submit {
+    display: block;
+    margin: 30px auto 0;
+    padding: 12px 30px;
+    background-color: #5a4fcf;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .btn-submit:hover {
+    background-color: #4a3dbf;
+  }
+  
+  
+  /* Notification Checkboxes Alignment */
+  .formt-group.full-width label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: #333;
+    background-color: #f9f9f9;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+  }
+  
+  .formt-group.full-width label:hover {
+    border-color: #5a4fcf;
+  }
+  
+  .formt-group.full-width input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #5a4fcf;
+    cursor: pointer;
+  }
+  
+  .show-password-wrapper {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: left;
+    gap: 8px;
+    font-size: 14px;
+  }
+  
+  .show-password-wrapper input[type="checkbox"] {
+    accent-color: #5a4fcf;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+  
+  .show-password-wrapper label {
+    color: #333;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  /* Toggle Switch Style for Notifications */
+  .formt-group.full-width label {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    padding: 14px 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+  
+  .formt-group.full-width label:hover {
+    border-color: #5a4fcf;
+  }
+  
+  .formt-group.full-width input[type="checkbox"] {
+    appearance: none;
+    width: 46px;
+    height: 24px;
+    background: #ccc;
+    border-radius: 50px;
+    position: relative;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .formt-group.full-width input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease;
+  }
+  
+  .formt-group.full-width input[type="checkbox"]:checked {
+    background: #5a4fcf;
+  }
+  
+  .formt-group.full-width input[type="checkbox"]:checked::before {
+    transform: translateX(22px);
+  }
+  
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .form-row .formt-group {
+      flex: 1 1 45%;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .form-row .formt-group {
+      flex: 1 1 100%;
+    }
+  
+    .formt-container {
+      padding: 20px;
+    }
+  }
+  
+  

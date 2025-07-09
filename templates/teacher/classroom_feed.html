@@ -1,0 +1,975 @@
+{% extends '../teacher/index.html' %}
+{% block content %}
+{% load static%}
+
+<!-- Modern Gradient Header -->
+ <div class="feed">
+  <header class="classroom-header">
+    <div class="header-content">
+      <h1 class="classroom-title">{{ class_name }}</h1>
+      <div class="classroom-meta">
+        <span class="class-code">Code: {{ class_code }}</span>
+        <div class="members-count">
+          <i class="fas fa-users"></i>
+          {{ members|length }} Members
+        </div>
+      </div>
+    </div>
+    <div class="header-gradient"></div>
+  </header>
+<div class="classroom-nav">
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('posts')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+      </svg>
+      Posts
+    </button>
+    
+    
+    <button class="nav-tab" onclick="switchTab('media')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M4 16l4.586-4.586a2 2 0 0 1 2.828 0L16 16m-2-2l1.586-1.586a2 2 0 0 1 2.828 0L20 14m-6-6h.01M6 20h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2z"></path>
+      </svg>
+      Media
+    </button>
+    <button class="nav-tab" onclick="switchTab('people')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+        <circle cx="9" cy="7" r="4"></circle>
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+      </svg>
+      People
+    </button>
+  </div>
+</div>
+
+<!-- Add these new sections before the floating action button -->
+<div id="peopleSection" class="classroom-section" style="display: none;">
+  <div class="people-grid">
+    {% for member in members %}
+    <div class="person-card" data-aos="fade-up">
+      <div class="person-avatar" style="background-color: {{ post.6|default:"ABCDEF"|slice:":6"|add:'99' }};">
+        {{ member.name|cut:" "|slice:":2"|join:""|upper }}
+      </div>
+            
+      <div class="person-info">
+        <h4>{{ member.name }}</h4>
+        <p class="person-role {{ member.role|lower }}">{{ member.role }}</p>
+        <div class="person-meta">
+          <span>{{ member.email }}</span>
+          <span>{{ member.joined|date:"M Y" }}</span>
+        </div>
+      </div>
+      {% if member.role == 'student' %}
+      <a href="mailto:{{ member.email }}" class="contact-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+      </a>
+      {% endif %}
+    </div>
+    {% empty %}
+    <div class="empty-state">
+      <p>No members found in this classroom</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<div id="mediaSection" class="classroom-section" style="display: none;">
+  <div class="media-grid">
+    {% if media_posts %}
+      {% for post in media_posts %}
+        {% for link in post.3 %}
+          <div class="media-item" data-aos="fade-up">
+            <div class="media-card">
+              <div class="media-preview">
+                {% if '.pdf' in link.lower %}
+                  <div class="doc-preview">
+                    <div class="doc-header">
+                      <div class="doc-red-line"></div>
+                      <div class="doc-title">Document Preview</div>
+                    </div>
+                    <div class="doc-content">
+                      <div class="doc-line"></div>
+                      <div class="doc-line" style="width: 90%"></div>
+                      <div class="doc-line" style="width: 80%"></div>
+                      <div class="doc-line" style="width: 85%"></div>
+                    </div>
+                    <div class="doc-footer">
+                      <svg class="doc-icon" viewBox="0 0 24 24">
+                        <path fill="#e53935" d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11zM8 15.01l1.41 1.41L11 14.84V19h2v-4.16l1.59 1.59L16 15.01 12.01 11 8 15.01z"/>
+                      </svg>
+                      <span class="doc-type">PDF Document</span>
+                    </div>
+                  </div>
+                {% else %}
+                  <div class="image-container" style="background-image: url('{{ link }}')">
+                    <div class="media-overlay">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                      </svg>
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="media-info">
+                <a href="{{ link }}" target="_blank" class="media-title" title="{{ link }}">
+                  {{ post.7|truncatechars:35 }}
+                </a>
+                <div class="media-meta">
+                  <div class="media-author">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                    <span>{{ post.6 }}</span>
+                  </div>
+                  <div class="media-date">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zM12 13h5v5h-5z"/>
+                    </svg>
+                    <span>{{ post.5 }}</span>
+                  </div>
+                </div>              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    {% else %}
+      <!-- Your existing empty state -->
+      <div class="empty-state">
+        <div class="empty-content">
+          <svg viewBox="0 0 24 24">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM13 17H7v-2h6v2zm4-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+          </svg>
+          <h3>No Media Found</h3>
+          <p>Nothing has been shared in this classroom yet</p>
+        </div>
+      </div>
+
+    {% endif %}
+  </div>
+</div>
+
+
+<!-- Animated Feed Container -->
+<div class="feed-container classroom-section" id="postsSection">
+  {% for post in posts %}
+  <!-- Glassmorphism Post Card with Hover Effect -->
+  <div class="post-card" data-aos="fade-up" data-id="{{post.0}}" data-aos-duration="500">
+    <!-- Post Header with Avatar Placeholder -->
+    <div class="post-header">
+      <div class="post-author">
+        <div class="avatar" style="background-color: {{ post.6|slice:":6"|add:'99' }};">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#ccc" viewBox="0 0 24 24">
+            <path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z"/>
+          </svg>        
+        </div>
+        <div>
+          <h3 class="post-title">{{ post.1 }}</h3>
+          <p class="post-meta">
+            <span class="post-author-name">{{ post.6 }}</span>
+            <span class="post-badge {{ post.4|lower }}">{{ post.4|title }}</span>
+            <span class="post-time">{{ post.5 }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="action-menu">
+        <button class="menu-btn" onclick="toggleMenu(event,this)">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <circle cx="12" cy="12" r="1"></circle>
+            <circle cx="12" cy="5" r="1"></circle>
+            <circle cx="12" cy="19" r="1"></circle>
+          </svg>
+        </button>
+        <div class="menu-dropdown">
+          <button onclick="openEditPopup(event,'{{class_code}}','{{post.0}}','{{post.1}}','{{post.2}}')" class="menu-item1">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"
+              ></path>
+              <path
+                d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"
+              ></path>
+            </svg>
+            Edit
+          </button>
+          <button
+            class="menu-item1 delete-btn"
+            onclick="confirmDelete(event,'{{ class_code }}','{{ post.0 }}')"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path d="M3 6h18"></path>
+              <path
+                d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"
+              ></path>
+            </svg>
+            Delete
+          </button>
+        </div>
+      </div>
+      
+    </div>
+
+    <!-- Post Content with Markdown-like Formatting -->
+    <div class="post-content">
+      {{ post.2|linebreaksbr }}
+    </div>
+
+    <!-- Attachment with Animated Preview -->
+<!-- Attachment Section -->
+{% if post.3 %}
+<div class="attachments-grid">
+  {% for link in post.3 %}
+  {% with file_type=link|lower %}
+  <a href="{{ link }}" target="_blank" class="attachment-card 
+    {% if '.png' in file_type or '.jpg' in file_type or '.jpeg' in file_type or '.gif' in file_type %}image-attachment
+    {% elif '.pdf' in file_type %}pdf-attachment
+    {% elif '.doc' in file_type or '.docx' in file_type %}doc-attachment
+    {% elif '.xls' in file_type or '.xlsx' in file_type %}sheet-attachment
+    {% elif '.zip' in file_type or '.rar' in file_type %}zip-attachment
+    {% elif '.ppt' in file_type or '.pptx' in file_type %}slide-attachment
+    {% elif '.txt' in file_type %}text-attachment
+    {% elif '.html' in file_type or '.css' in file_type or '.js' in file_type %}code-attachment
+    {% else %}file-attachment{% endif %}">
+    
+    <div class="attachment-thumbnail">
+      {% if '.png' in file_type or '.jpg' in file_type or '.jpeg' in file_type or '.gif' in file_type %}
+        <div class="image-preview" style="background-image: url('{{ link }}')"></div>
+      {% else %}
+        <div class="file-icon">
+          {% if '.pdf' in file_type %}
+            <svg viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+              <path d="M14 3v5h5m-8 1H9v4h1a2 2 0 1 1 0 4H9m2-8h1m-3 8h3" stroke-linecap="round"/>
+            </svg>
+          {% elif '.doc' in file_type or '.docx' in file_type %}
+            <svg viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+              <path d="M14 3v5h5M12 13v-1m0 3v-1m0 3v-1m4-5H8m8 4H8m8 4H8"/>
+            </svg>
+          {% elif '.xls' in file_type or '.xlsx' in file_type %}
+            <svg viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+              <path d="M14 3v5h5M8 13h4m-4 2h8m-8 2h8M8 9h8"/>
+            </svg>
+          {% elif '.ppt' in file_type or '.pptx' in file_type %}
+            <svg viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+              <path d="M14 3v5h5M8 13h2m2-2v4m-2 2h2M8 9h8"/>
+            </svg>
+          {% elif '.zip' in file_type or '.rar' in file_type %}
+            <svg viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+              <path d="M14 3v5h5m-2 6l-2-2m0 0l-2-2m2 2l-2 2m2-2l2 2m-4 0l2-2m-2 2l-2-2"/>
+            </svg>
+          {% elif '.html' in file_type or '.css' in file_type or '.js' in file_type %}
+            <svg viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+              <path d="M14 3v5h5M8 13l2-4 2 4m-2-3v3m4-7h1m-4 0h1m-4 4h4m-4 2h4"/>
+            </svg>
+          {% elif '.txt' in file_type %}
+            <svg viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+              <path d="M14 3v5h5M8 9h8M8 13h8M8 17h5"/>
+            </svg>
+          {% else %}
+            <svg viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+              <path d="M14 3v5h5m-5 7h2m-2 2h2m-5-6h2m-2 2h2"/>
+            </svg>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+    
+    <div class="attachment-info">
+      <span class="file-name">{{ link|cut:"uploads/"|truncatechars:25 }}</span>
+      <span class="file-type">
+        {% if '.png' in file_type or '.jpg' in file_type or '.jpeg' in file_type or '.gif' in file_type %}
+        Image
+        {% else %}
+        {{ link|slice:"-3:"|upper }} File
+        {% endif %}
+      </span>
+      <span class="file-name">{{post.7}}</span>
+    </div>
+    
+    <div class="hover-overlay">
+      <svg viewBox="0 0 24 24">
+        <path d="M10 6V4H4v16h16v-6h-2v4H6V6h4zm2 0h6.5L12 11.5V6zm6 8.5V20H8v-8h6v-2H6V4h2v6h10l-4 4.5z"/>
+      </svg>
+    </div>
+  </a>
+  {% endwith %}
+  {% endfor %}
+</div>
+{% endif %}
+
+    <!-- Interactive Comments Section -->
+    <div class="post-actions">
+      <button onclick="toggleComments({{ post.0 }})" id="toggle-btn-{{ post.0 }}" class="toggle-comments-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
+        <span id="comment-count-{{ post.0 }}">
+          {{ post.8}} Comments
+        </span>        
+      </button>
+    </div>
+
+    <!-- Collapsible Comments Section -->
+    <div class="comments-box" id="comments-box-{{ post.0 }}" style="display: none;">
+      <!-- Floating Comment Form -->
+      <form action="/teacher/classroom/{{ class_code }}/post/{{ post.0 }}/comment/" method="POST" class="comment-form floating-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <textarea name="content" placeholder="Write your comment..." rows="2" required></textarea>
+          <button type="submit" class="send-button">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+        <input type="hidden" name="parent_comment_id" value="" />
+      </form>
+
+      <!-- Comments Thread -->
+      <ul class="comment-list">
+        {% for comment in nested_comments %}
+          {% if comment.post_id == post.0 %}
+          <li class="comment" data-aos="fade-in">
+            <div class="comment-avatar" style="background-color: {{ comment.reg_no|default:comment.faculty_id|slice:":6"|add:'99' }}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#ccc" viewBox="0 0 24 24">
+                <path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z"/>
+              </svg>
+            </div>
+            <div class="comment-body">
+              <div class="comment-header">
+                <strong>{{ comment.reg_no|default:comment.faculty_id }}</strong>
+                <span class="comment-time">{{ comment.created_at|timesince }} ago</span>
+              </div>
+              <div class="comment-text">{{ comment.comment }}</div>
+              <button onclick="toggleReplyBox({{ comment.id }})" class="reply-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <polyline points="15 17 20 12 15 7"></polyline>
+                  <path d="M4 18v-2a4 4 0 0 1 4-4h12"></path>
+                </svg>
+                Reply
+              </button>
+
+              <!-- Reply Form (Hidden) -->
+              <form id="reply-box-{{ comment.id }}" style="display:none;" 
+                    action="/teacher/classroom/{{ class_code }}/post/{{ post.0 }}/comment/" method="POST" class="reply-form">
+                {% csrf_token %}
+                <div class="form-group">
+                  <textarea name="content" placeholder="Write your reply..." rows="1" required></textarea>
+                  <button type="submit" class="send-button">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <line x1="22" y1="2" x2="11" y2="13"></line>
+                      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                  </button>
+                </div>
+                <input type="hidden" name="parent_comment_id" value="{{ comment.id }}" />
+              </form>
+
+              <!-- Nested Replies -->
+              {% if comment.replies %}
+              <ul class="replies">
+                {% for reply in comment.replies %}
+                <li data-aos="fade-in" data-aos-delay="100">
+                  <div class="comment-avatar" style="background-color: {{ reply.reg_no|default:reply.faculty_id|slice:":6"|add:'99' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#ccc" viewBox="0 0 24 24">
+                      <path d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z"/>
+                    </svg>
+                  </div>
+                  <div class="comment-body">
+                    <div class="comment-header">
+                      <strong>{{ reply.reg_no|default:reply.faculty_id }}</strong>
+                      <span class="comment-time">{{ reply.created_at|timesince }} ago</span>
+                    </div>
+                    <div class="comment-text">{{ reply.comment }}</div>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+
+            </div>
+          </li>
+          {% endif %}
+        {% endfor %}
+        {% if not nested_comments %}
+          <p class="no-comments">No comments yet. Be the first to say something!</p>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+  {% empty %}
+  <div class="empty-state">
+    <svg width="200" viewBox="0 0 839 602" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M648.251 282.526C648.251 434.763 522.763 560.251 370.526 560.251C218.288 560.251 92.8008 434.763 92.8008 282.526C92.8008 130.288 218.288 4.80078 370.526 4.80078C522.763 4.80078 648.251 130.288 648.251 282.526Z" fill="#F2F2F2"/>
+      <path d="M639.251 282.526C639.251 430.481 518.481 551.251 370.526 551.251C222.57 551.251 101.801 430.481 101.801 282.526C101.801 134.57 222.57 13.8008 370.526 13.8008C518.481 13.8008 639.251 134.57 639.251 282.526Z" fill="white"/>
+      <path d="M584.251 282.526C584.251 403.199 487.199 500.251 366.526 500.251C245.852 500.251 148.801 403.199 148.801 282.526C148.801 161.852 245.852 64.8008 366.526 64.8008C487.199 64.8008 584.251 161.852 584.251 282.526Z" fill="#F2F2F2"/>
+      <path d="M257.801 240.526H475.251V242.526H257.801V240.526Z" fill="#E6E6E6"/>
+      <path d="M257.801 266.526H475.251V268.526H257.801V266.526Z" fill="#E6E6E6"/>
+      <path d="M257.801 292.526H411.251V294.526H257.801V292.526Z" fill="#E6E6E6"/>
+      <path d="M370.526 551.251C222.57 551.251 101.801 430.481 101.801 282.526C101.801 134.57 222.57 13.8008 370.526 13.8008" stroke="#E6E6E6" stroke-width="2"/>
+      <path d="M366.526 500.251C245.852 500.251 148.801 403.199 148.801 282.526C148.801 161.852 245.852 64.8008 366.526 64.8008" stroke="#E6E6E6" stroke-width="2"/>
+      <path d="M370.526 560.251C218.288 560.251 92.8008 434.763 92.8008 282.526C92.8008 130.288 218.288 4.80078 370.526 4.80078" stroke="#E6E6E6" stroke-width="2"/>
+    </svg>
+    <h3>Nothing to show yet</h3>
+    <p>Be the first to share something with your class!</p>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Floating Action Button -->
+<button class="fab" onclick="openPostPopup()">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+    <line x1="12" y1="5" x2="12" y2="19"></line>
+    <line x1="5" y1="12" x2="19" y2="12"></line>
+  </svg>
+</button>
+
+<!-- Enhanced Popup Form -->
+<div id="postPopup" class="popup-overlay">
+  <div class="popup-content">
+    <div class="popup-header">
+      <div class="popup-header-content">
+        <h2>Create New Post</h2>
+        <p class="class-info">For: <span class="class-code">{{ class_code }}</span></p>
+      </div>
+      <button class="close-popup" onclick="closePopup()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <form id="postForm" action="/teacher/classroom/{{ class_code }}/post/" method="POST" enctype="multipart/form-data" class="popup-form">
+      {% csrf_token %}
+      
+      <!-- Post Title -->
+      <div class="form-section">
+          <label for="postTitle" class="form-label">
+              Title
+              <span class="required-indicator">*</span>
+          </label>
+          <input type="text" id="postTitle" name="title" class="form-input" placeholder="Enter post title" required>
+      </div>
+  
+      <!-- Post Content -->
+      <div class="form-section">
+          <label for="postContent" class="form-label">
+              Content
+              <span class="required-indicator">*</span>
+          </label>
+          <textarea id="postContent" name="content" class="form-textarea" rows="5" placeholder="Write your post content here..." required></textarea>
+      </div>
+  
+      <!-- Post Type -->
+      <div class="form-section">
+          <label class="form-label">
+              Post Type
+              <span class="required-indicator">*</span>
+          </label>
+          <div class="type-selector-grid">
+              <div class="type-option">
+                  <input type="radio" id="typeAnnouncement" name="post_type" value="announcement" checked>
+                  <label for="typeAnnouncement" class="type-card">
+                      <span class="type-icon">📢</span>
+                      <span class="type-name">Announcement</span>
+                  </label>
+              </div>
+              <div class="type-option">
+                  <input type="radio" id="typeMaterial" name="post_type" value="material">
+                  <label for="typeMaterial" class="type-card">
+                      <span class="type-icon">📚</span>
+                      <span class="type-name">Material</span>
+                  </label>
+              </div>
+              <div class="type-option">
+                  <input type="radio" id="typeAssignment" name="post_type" value="assignment">
+                  <label for="typeAssignment" class="type-card">
+                      <span class="type-icon">📝</span>
+                      <span class="type-name">Assignment</span>
+                  </label>
+              </div>
+          </div>
+      </div>
+  
+      <!-- File Attachment -->
+      <div class="form-section">
+          <label for="postAttachment" class="form-label">Attachment</label>
+          <div class="attachment-field">
+              <input type="file" id="postAttachment" name="attachments" class="form-input" multiple>
+          </div>
+          <p class="field-hint">You can upload HTML, CSS, JS, Python files or any other file types</p>
+      </div>
+      <div class="form-section">
+        <label for="postTitle" class="form-label">
+            Attachment title
+        </label>
+        <input type="text" id="postTitle" name="attachment_title" class="form-input" placeholder="Enter attachement name">
+    </div>
+  
+      <!-- Form Actions -->
+      <div class="form-actions">
+          <button type="button" class="cancel-btn" onclick="closePopup()">Cancel</button>
+          <button type="submit" class="submit-btn">Publish Post</button>
+      </div>
+  </form>
+  
+  </div>
+</div>
+<div id="editClassPopup" class="popup-overlay">
+  <div class="popup-content">
+    <div class="form-container">
+      <button class="close-popup" onclick="closeEditPopup()">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div class="form-header">
+        <svg xmlns="http://www.w3.org/2000/svg" 
+        width="60" 
+        height="60" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        aria-label="Post icon"
+        role="img">
+        
+     <!-- Main document body -->
+     <rect x="3" y="3" width="18" height="18" rx="2" ry="2" class="document-body"/>
+     
+     <!-- Text lines -->
+     <line x1="7" y1="8" x2="17" y2="8"/>
+     <line x1="7" y1="12" x2="17" y2="12"/>
+     <line x1="7" y1="16" x2="13" y2="16"/>
+     
+     <!-- Folded corner (optional) -->
+     <path d="M19 3L21 5V3H19Z" fill="currentColor"/>
+   </svg>
+        <h2>Edit Post</h2>
+        <p>Update your Post details</p>
+      </div>
+      <form
+        action="/teacher/classroom/{{ classroom.class_code }}/edit/"
+        method="POST"
+        class="edit-class-form"
+      >
+        {% csrf_token %}
+
+        <div class="input-group">
+          <label for="edit_class_name">Title</label>
+          <div class="input-field">
+            <svg
+              class="input-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+            >
+              <path
+                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+              ></path>
+            </svg>
+            <input
+              type="text"
+              id="post_title"
+              name="post_title"
+              value="{{ classroom.class_name }}"
+              placeholder="Enter new  Title"
+              minlength="3"
+              maxlength="50"
+              required
+            />
+            <div class="invalid-feedback">Please provide a valid name (3-50 characters)</div>
+          </div>
+        </div>
+        <div class="form-section">
+          <label for="postContent" class="form-label">
+            Content
+            <span class="required-indicator">*</span>
+          </label>
+          <textarea id="postContent1" name="post_content" class="form-textarea" rows="5" placeholder="Write your post content here..." required></textarea>
+          <div class="character-counter"><span id="charCount1">0</span>/500</div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+          >
+            <path
+              d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"
+            ></path>
+            <path d="M17 21v-8H7v8"></path>
+            <path d="M7 3v5h8"></path>
+          </svg>
+          Save Changes
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+<div id="toastContainer"></div>
+</div>
+<script>
+// Enhanced JavaScript with animations
+
+// Close modals on outside click
+document.querySelectorAll('.modal-overlay').forEach(modal => {
+  modal.addEventListener('click', function(e) {
+    if (e.target === this) {
+      this.classList.remove('active');
+    }
+  });
+});
+
+// Close on ESC key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeEditPostModal();
+    closeDeletePostModal();
+  }
+});
+function closePopup() {
+  const popup = document.getElementById('postPopup');
+  popup.classList.remove('active');
+}
+
+function openPostPopup() {
+  const popup = document.getElementById('postPopup');
+  popup.classList.add('active');
+}
+function switchTab(tabName) {
+  // Remove active class from all tabs
+  document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+  // Hide all sections
+  document.querySelectorAll('.classroom-section').forEach(section => section.style.display = 'none');
+  
+  // Activate selected tab
+  document.querySelector(`.nav-tab[onclick="switchTab('${tabName}')"]`).classList.add('active');
+  // Show selected section
+  if(tabName==="posts")
+  document.getElementById(`${tabName}Section`).style.display = 'grid';
+  else
+  document.getElementById(`${tabName}Section`).style.display = 'block';
+  
+  // Refresh animations
+  setTimeout(() => {
+    aos.refresh();
+  }, 100);
+}
+function toggleComments(postId) {
+  const box = document.getElementById("comments-box-" + postId);
+  const btn = document.getElementById("toggle-btn-" + postId);
+  
+  if (box.style.display === "none") {
+    box.style.display = "block";
+    btn.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+      </svg>
+      <span id="comment-count-${postId}">Hide Comments</span>
+    `;
+    // Animate appearance
+    box.style.opacity = 0;
+    setTimeout(() => {
+      box.style.opacity = 1;
+    }, 10);
+  } else {
+    box.style.opacity = 0;
+    setTimeout(() => {
+      box.style.display = "none";
+    }, 300);
+    btn.innerHTML = `
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+      </svg>
+      <span id="comment-count-${postId}">Show Comments</span>
+    `;
+  }
+}
+
+function toggleReplyBox(id) {
+  const box = document.getElementById("reply-box-" + id);
+  if (box.style.display === "block") {
+    box.style.opacity = 0;
+    setTimeout(() => {
+      box.style.display = "none";
+    }, 300);
+  } else {
+    box.style.display = "block";
+    box.style.opacity = 0;
+    setTimeout(() => {
+      box.style.opacity = 1;
+    }, 10);
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+// Character counter for post content
+document.getElementById('postContent').addEventListener('input', function() {
+  const charCount = this.value.length;
+  document.getElementById('charCount').textContent = charCount;
+  
+  if (charCount > 500) {
+    this.classList.add('invalid');
+  } else {
+    this.classList.remove('invalid');
+  }
+});
+document.getElementById('postContent1').addEventListener('input', function() {
+  const charCount = this.value.length;
+  document.getElementById('charCount1').textContent = charCount;
+  
+  if (charCount > 500) {
+    this.classList.add('invalid');
+  } else {
+    this.classList.remove('invalid');
+  }
+});
+
+// Simple animation on scroll implementation
+document.addEventListener('DOMContentLoaded', function() {
+  const elements = document.querySelectorAll('[data-aos]');
+  
+  function checkPosition() {
+    elements.forEach(element => {
+      const position = element.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+      
+      if (position < windowHeight - 100) {
+        element.classList.add('aos-animate');
+      }
+    });
+  }
+  
+  window.addEventListener('scroll', checkPosition);
+  window.addEventListener('resize', checkPosition);
+  checkPosition();
+  
+  // Close when clicking outside content
+  document.getElementById('postPopup').addEventListener('click', function(e) {
+    if (e.target === this) closePopup();
+  });
+});
+function toggleMenu(event,button) {
+  event.preventDefault();
+  event.stopPropagation();
+  
+  const menu = button.closest('.action-menu');
+  menu.classList.toggle('active');
+  
+  // Close when clicking outside
+  document.addEventListener('click', function closeMenu(e) {
+    if (!menu.contains(e.target)) {
+      menu.classList.remove('active');
+      document.removeEventListener('click', closeMenu);
+    }
+  });
+}
+
+// Delete confirmation
+function confirmDelete(event,classCode,postID) {
+  event.preventDefault();
+  event.stopPropagation();
+  const dialog = document.createElement('div');
+  dialog.className = 'delete-confirm';
+  dialog.innerHTML = `
+    <div class="confirm-box">
+      <h3>Delete Post?</h3>
+      <p>Are you sure you want to delete this Post? This action cannot be undone.</p>
+      <div class="confirm-actions">
+        <button class="confirm-btn cancel-btn" onclick="this.closest('.delete-confirm').remove()">Cancel</button>
+        <button class="confirm-btn proceed-btn" onclick="deleteClassroom('${classCode}','${postID}')">Delete</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(dialog);
+  setTimeout(() => dialog.classList.add('active'), 10);
+}
+
+function deleteClassroom(classCode,PostID) {
+  fetch(`/teacher/classroom/${classCode}/post/delete/${PostID}/`, {
+    method: 'POST',
+    headers: {
+      'X-CSRFToken': '{{ csrf_token }}',
+      'Content-Type': 'application/json'
+    }
+  }).then(response =>response.json())
+  .then(data => {
+    console.log(data)
+    if (data.status === 'success') {
+      // Remove classroom card
+      const card = document.querySelector(`.post-card[data-id="${PostID}"]`);
+      if (card) card.remove();
+      // Show success toast
+    }
+    showToast(data.message, data.status);
+  });
+  
+  // Remove confirmation dialog
+  document.querySelector('.delete-confirm').remove();
+}
+
+// Toast creation function
+function showToast(message, type = 'success') {
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    <svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      ${type === 'success' ? 
+        '<path d="M20 6L9 17l-5-5"/>' : 
+        '<path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>'}
+    </svg>
+    <span>${message}</span>
+  `;
+  
+  document.getElementById('toastContainer').appendChild(toast);
+  
+  // Animation timing
+  setTimeout(() => toast.classList.add('visible'), 50);
+  setTimeout(() => {
+    toast.classList.remove('visible');
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+function gotoClass(id) {
+  window.open(`/teacher/classroom/${id}/`, '_blank');
+}
+function openEditPopup(event,code,id,title,content) {
+  event.preventDefault();
+  event.stopPropagation();
+  const popup = document.getElementById('editClassPopup');
+  popup.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  
+  // Fill form with classroom data
+  const form = document.querySelector('.edit-class-form');
+  if (id) {
+    document.getElementById('post_title').value = title;
+    document.getElementById('postContent1').innerText = content;
+    console.log(document.getElementById('postContent'))
+    form.action = `/teacher/classroom/${code}/post/update/${id}/`;
+  }
+  
+  // Reset any previous validation
+  form.classList.remove('was-validated');
+}
+
+// Function to close edit popup
+function closeEditPopup() {
+  const popup = document.getElementById('editClassPopup');
+  popup.classList.remove('active');
+  document.body.style.overflow = 'auto';
+}
+
+// Close when clicking outside
+document.getElementById('editClassPopup').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeEditPopup();
+  }
+});
+
+// Close with Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && document.getElementById('editClassPopup').classList.contains('active')) {
+    closeEditPopup();
+  }
+});
+
+function updateClassroomCard(newName) {
+  // Implement this based on your app structure
+  // Example:
+  const currentCard = document.querySelector(`.classroom-card h3`);
+  if (currentCard) {
+    currentCard.textContent = newName;
+  }
+}
+
+document.querySelector('.edit-class-form')?.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const form = this;
+form.classList.add('was-validated');
+
+if (!form.checkValidity()) {
+e.preventDefault();
+e.stopPropagation();
+return;
+}
+  
+  try {
+    const formData = new FormData(this);
+    const response = await fetch(this.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}'
+      }
+    });
+
+    if (response.ok) {
+      // Show success toast
+      data = await response.json();
+      console.log(data)
+      showToast(data.message, data.status);
+      
+      // Close the popup after a short delay
+      setTimeout(() => {
+        closeEditPopup();
+        
+       location.reload(); // Reload the page to reflect changes
+      }, 500);
+    } else {
+      showToast('Failed to update post', 'error');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    showToast('An error occurred', 'error');
+  }
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,76 @@
+.performance-main {
+    padding: 20px;
+  }
+  .performance-page {
+    max-width: 1330px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  .performance-summary {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  .performance-card {
+    background-color: #3d3b8e;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+    text-align: center;
+  }
+  .performance-card h3 {
+    margin-bottom: 10px;
+  }
+  .tabs button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    background-color: #3d3b8e;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .tabs button.active {
+    background-color: #2e2c7c;
+  }
+  .tab-content {
+    display: none;
+  }
+  .tab-content.active {
+    display: block;
+  }
+  .performance-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  .performance-table th, .performance-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  .performance-table th {
+    background-color: #3d3b8e;
+    color: white;
+  }
+  .sort-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  .sort-container label {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  .sort-container select {
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  

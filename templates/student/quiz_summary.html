@@ -1,0 +1,407 @@
+{%extends 'index.html' %}
+{% block content %}
+{% load static %}
+
+    <!-- <link rel="stylesheet" href="{%static 'css/student/quiz_summary.css'%}"> -->
+    <style>
+        :root {
+            --primary: #2563eb;
+            --success: #16a34a;
+            --error: #dc2626;
+            --warning: #f59e0b;
+            --surface: #f8fafc;
+            --border: #e2e8f0;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --radius: 14px;
+            --space-sm: 1.2rem;
+            --space-md: 2rem;
+            --space-lg: 3rem;
+        }
+/* 
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: #ffffff;
+            color: var(--text);
+            margin: 0;
+            padding: var(--space-lg);
+            line-height: 1.6;
+        }
+
+        .summary-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .summary-header {
+            text-align: center;
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-md);
+            border-bottom: 2px solid var(--surface);
+        }
+
+        .summary-header h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 0 0 var(--space-sm) 0;
+        }
+
+        
+
+        .score-card {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: var(--space-md);
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: var(--space-md);
+            margin-bottom: var(--space-lg);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+        }
+
+        .progress-ring {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto;
+        }
+
+        .progress-ring__background {
+            stroke: #e5e7eb;
+            fill: none;
+            stroke-width: 8;
+        }
+
+        .progress-ring__progress {
+            stroke: var(--primary);
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.8s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .progress-text span {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .progress-text small {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .score-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-sm);
+        }
+
+        .score-metric {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem;
+            background: white;
+            border-radius: calc(var(--radius) - 4px);
+            border: 1px solid var(--border);
+        }
+
+        .score-metric i {
+            font-size: 1.5rem;
+        }
+
+        .score-metric.correct i { color: var(--success); }
+        .score-metric.wrong i { color: var(--error); }
+        .score-metric.unattempted i { color: var(--warning); }
+
+        .score-metric div span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .score-metric div small {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        } */
+        .performance-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1.6rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 2rem;
+            font-size: 1rem;
+            margin-top: var(--space-sm);
+        }
+
+        .question-analysis {
+            display: grid;
+            gap: var(--space-md);
+        }
+
+        .question-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: var(--space-md);
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s ease;
+        }
+
+        .question-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-sm);
+        }
+
+        .question-number {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .question-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .question-status.correct { background: #f0fdf4; color: var(--success); }
+        .question-status.wrong { background: #fef2f2; color: var(--error); }
+        .question-status.unattempted { background: #fffbeb; color: var(--warning); }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: var(--space-md);
+            line-height: 1.4;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 0.8rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-radius: 0.8rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+        }
+
+        .option.correct,.answer.correct {
+            border-color: var(--success);
+            background: linear-gradient(to right, #f0fdf4 50%, white);
+        }
+
+        .option.wrong,.answer.wrong {
+            border-color: var(--error);
+            background: linear-gradient(to right, #fef2f2 50%, white);
+        }
+
+        .option.unattempted {
+            border-color: var(--warning);
+            border-style: dashed;
+            background: #fffbeb;
+        }
+
+        .text-answers {
+            display: grid;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--surface);
+            border-radius: var(--radius);
+        }
+
+        .answer {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .answer span {
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .question-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding-top: var(--space-sm);
+            border-top: 1px solid var(--border);
+            margin-top: var(--space-md);
+        }
+
+        @media (max-width: 768px) {
+            .score-card {
+                grid-template-columns: 1fr;
+            }
+            
+            .score-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-header h1 {
+                font-size: 2rem;
+            }
+            
+            .question-card {
+                padding: var(--space-sm);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="summary-container">
+        <header class="summary-header">
+            <h1>{{ quiz_name }}</h1>
+            <div class="performance-badge">
+                <i class="fas fa-chart-line"></i>
+                Performance Summary
+            </div>
+        </header>
+
+        <div class="score-card">
+            <div class="progress-ring">
+                <svg width="140" height="140">
+                    <circle class="progress-ring__background" cx="70" cy="70" r="64"/>
+                    <!-- Add condition for zero percentage -->
+                    {% if percentage > 0 %}
+                    <circle class="progress-ring__progress" cx="70" cy="70" r="64"
+                            stroke-dasharray="402" stroke-dashoffset="{{ offset }}"/>
+                    {% else %}
+                    <circle class="progress-ring__progress" cx="70" cy="70" r="64"
+                            stroke-dasharray="0 402" stroke-dashoffset="0"/>
+                    {% endif %}
+                </svg>
+                <div class="progress-text">
+                    <span>{{ percentage|floatformat:0 }}%</span>
+                    <small>Score</small>
+                </div>
+            </div>
+            
+            <div class="score-details">
+                <div class="score-metric correct">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <span>{{ correct_count }}</span>
+                        <small>Correct</small>
+                    </div>
+                </div>
+                <div class="score-metric wrong">
+                    <i class="fas fa-times-circle"></i>
+                    <div>
+                        <span>{{ wrong_count }}</span>
+                        <small>Wrong</small>
+                    </div>
+                </div>
+                <div class="score-metric unattempted">
+                    <i class="fas fa-minus-circle"></i>
+                    <div>
+                        <span>{{ unattempted_count }}</span>
+                        <small>Unattempted</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="question-analysis">
+            {% for item in summary %}
+            <div class="question-card">
+                <div class="question-header">
+                    <span class="question-number">Q{{ forloop.counter }}</span>
+                    {%if item.is_correct%}
+                    <span class="question-status {{ item.status }}">
+                        <i class="fas fa-check"></i>
+                        {{ item.status|title }}
+                    </span>
+                    {%endif%}
+                </div>
+                
+                <p class="question-text">{{ item.question_text }}</p>
+
+                {% if item.options %}
+                <div class="options-grid">
+                    {% for opt in item.options %}
+                    {% if opt.is_correct %}
+                    <div class="option correct">
+                        <span class="option-text">{{ opt.text }}</span>
+                        <i class="fas fa-check"></i>
+                    </div>
+                    {% elif opt.is_selected and not opt.is_correct %}
+                    <div class="option wrong">
+                        <span class="option-text">{{ opt.text }}</span>
+                        <i class="fas fa-times"></i>
+                    </div>
+                    {% else %}
+                    <div class="option">
+                        <span class="option-text">{{ opt.text }}</span>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-answers">
+                    {% if item.text_answer == item.correct_answer %}
+                    <div class="answer correct">
+                        <span>Your Answer:</span>
+                        <div>{{ item.text_answer|default:"—" }}
+                            <i class="fas fa-check correct" style="float: right;"></i>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="answer wrong">
+                        <span>Your Answer:</span>
+                        <div>{{ item.text_answer|default:"—" }}
+                            <i class="fas fa-times " style="float: right;"></i>
+                        </div>
+                    </div>
+                
+                        <div class="answer correct">
+                            <span>Correct Answer:</span>
+                            <div>{{ item.correct_answer }}
+                                <i class="fas fa-check correct" style="float: right;"></i>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+                
+                {% endif %}
+
+                <div class="question-footer">
+                    <span class="marks-awarded">
+                        <i class="fas fa-star"></i>
+                        {{ item.marks_awarded }} / {{ item.total_marks }} Marks
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

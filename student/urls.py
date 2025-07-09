@@ -1,0 +1,26 @@
+from django.urls import path
+from . import views
+urlpatterns=[
+    path("",views.home,name="home"),
+    path("login/",views.login_view,name="login"),
+    path("dashboard/",views.dashboard,name="index"), 
+    path("courses/", views.student_courses_view, name="course"),
+    path("profile/",views.profile,name="profile"),
+    path("schedule/",views.schedule,name="schedule"),
+    path("quiz_list/",views.quiz_list,name="schedule"),
+    path("get_avl_quizzes/",views.get_student_quizzes,name="get_avl_quizzes"),
+    path("get_attempted_quizzes/",views.get_attempted_quizzes,name="get_avl_quizzes"),
+    path("quizdata/",views.quiz_data_api,name="quiz_api"),
+    path("assignmentdata/",views.assignment_data_api,name="assignment_api"),
+    path("attend/",views.attend,name="attendance"),
+    path("results/",views.results,name="results"),
+    path("classrooms/",views.classroom,name="classrooms"),
+    path("settings/",views.student_settings,name="settings"),
+    path('settings/account/', views.student_settings, name='settings_account'),
+    path("get_timetable/", views.get_student_timetable, name="get_student_timetable"),
+    path('classroom/join/', views.student_join_classroom, name='student_join_classroom'),
+    path('classroom/<str:class_code>/', views.student_classroom_feed, name='classroom_detail'),
+    path("logout/", views.user_logout, name="logout"),
+    path('accounts/google/login/', views.google_login, name='google_login'),
+    path('accounts/google/callback/', views.google_callback, name='google_callback'),
+]

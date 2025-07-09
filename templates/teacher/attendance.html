@@ -1,0 +1,67 @@
+{% extends "../teacher/index.html" %}
+{% block content %}
+
+<h2>Attendance Entry</h2>
+
+<form method="get" id="filter-form" class="filter-bar">
+    <label for="date">Select Date:</label>
+    <input type="date" id="date" name="date" value="{{ selected_date|default:today }}" max="{{ today }}">
+
+    <label for="type">Attendance Type:</label>
+    <select name="type" id="type">
+        <option value="manual" {% if selected_type == 'manual' %}selected{% endif %}>Manual</option>
+        <option value="csv" {% if selected_type == 'csv' %}selected{% endif %}>CSV</option>
+    </select>
+
+    <button type="submit">Show Classes</button>
+</form>
+
+
+{% if today_courses %}
+    <div class="card-container">
+        <div class="heading-row">
+            <div>Course Name</div>
+            <div>Course Code</div>
+            <div>Sec/Sem</div>
+            <div>Hour</div>
+            <div>Links</div>  <!-- Removed email column -->
+        </div>
+
+        {% for course in today_courses %}
+        <div class="card">
+            <h3>{{course.0}}</h3>
+        <p><strong>Course Code:</strong> {{course.1}}</p>
+        <p><strong>Sec/Sem:</strong> {{course.2}}-{{course.3}}</p>
+        <p><strong>Hour:</strong> {{course.4}}</p>
+        <a href="/teacher/attendance_entry/?code={{ course.1 }}&section={{ course.2 }}&sem={{ course.3 }}&date={{ selected_date }}&type={{ selected_type }}">Go there</a>
+    </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No classes scheduled for today.</p>
+{% endif %}
+
+
+<script>
+function goToAttendance(courseCode, section, semester) {
+  const selectedDate = document.getElementById("attendance_date").value;
+  const entryType = document.getElementById("entry_type").value;
+
+  if (!selectedDate) {
+    alert("Please select a date.");
+    return;
+  }
+
+  // Optional: prevent future date selection here too
+  const today = new Date().toISOString().split('T')[0];
+  if (selectedDate > today) {
+    alert("You can only mark attendance for today or a past date.");
+    return;
+  }
+
+  const url = `/attendance/entry/?code=${courseCode}&section=${section}&sem=${semester}&date=${selectedDate}&type=${entryType}`;
+  window.location.href = url;
+}
+</script>
+
+{% endblock %}

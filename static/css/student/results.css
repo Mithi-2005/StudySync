@@ -1,0 +1,88 @@
+.results-dashboard {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  padding-left: 30px;
+  padding-top: 50px;
+  padding-right: 3vh;
+}
+
+.results-card {
+  background-color: #CBD1FF;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.3s;
+}
+
+.results-card:nth-child(2) {
+  background-color: #CAE5FF;
+}
+
+.results-card:nth-child(3) {
+  background-color: #ACEDFF;
+}
+
+.results-card:nth-child(4) {
+  background-color: rgb(249, 192, 239);
+  color: #fff;
+}
+
+.results-card:hover {
+  transform: translateY(-8px);
+}
+
+.left-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+}
+
+.icon {
+  font-size: 50px;
+  color: #3D3B8E;
+}
+
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.number {
+  font-size: 28px;
+  font-weight: bold;
+  color: #3D3B8E;
+}
+
+.label {
+  font-size: 16px;
+  color: #555;
+}
+
+
+.btn {
+  background-color: #3D3B8E;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background-color: #2b2973;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+}

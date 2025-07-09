@@ -1,0 +1,159 @@
+/* Desktop View */
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 1300px;
+  margin: auto;
+  margin-top: 3%;
+  padding: 20px;
+  background: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading row */
+.heading-row {
+  display: grid;
+  grid-template-columns: 3fr 1fr 2fr 1fr 1fr;  /* Removed email column */
+  gap: 10px;
+  align-items: center;
+  padding: 15px 20px;
+  border-radius: 8px;
+  background: #007bff;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Course card layout */
+.card {
+  display: grid;
+  grid-template-columns: 3fr 1fr 2fr 1fr 1fr;  /* Removed email column */
+  gap: 10px;
+  align-items: center;
+  padding: 20px;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Column alignment */
+.card h3 {
+  grid-column: 1;  /* Course Name */
+  font-size: 20px;
+  color: #1E3A8A;
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;  
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card p {
+  margin: 0;
+  font-size: 16px;
+  color: #555;
+  text-align: center;  
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Individual column alignment */
+.card p:nth-of-type(1) { grid-column: 2; }  /* Course Code */
+.card p:nth-of-type(2) { grid-column: 3; }  /* Professor */
+.card p:nth-of-type(3) { grid-column: 4; }  /* Credits */
+
+/* Link styling */
+.card a {
+  grid-column: 5;  /* Align links with heading */
+  display: inline-block;
+  padding: 10px 20px;
+  background: #007bff;  /* Green color for better contrast */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+  transition: background 0.3s;
+  white-space: nowrap;
+  justify-self: center;   /* Center align in grid cell */
+  font-weight: bold;
+}
+
+.card a:hover {
+  background: #1E3A8A;
+  transform: scale(1.05);
+}
+
+/* Hide <strong> tags by default */
+.card p strong {
+  display: none;
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .heading-row {
+    display: none;  /* Hide table heading on mobile */
+  }
+
+  .card-container {
+    display: block;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px 0;
+    background: #f9f9f9;
+    gap: 15px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    align-items: flex-start; /* Left alignment */
+  }
+
+  .card h3 {
+    font-size: 20px;
+    color: #1E3A8A;
+    margin-bottom: 10px;
+    text-align: left; /* Ensure left alignment */
+  }
+
+  .card p {
+    font-size: 14px;
+    color: #666;
+    text-align: left; /* Proper left alignment */
+  }
+
+  .card a {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  .card a:hover {
+    background-color: #1E3A8A;
+  }
+
+  /* Show <strong> tags in mobile view */
+  .card p strong {
+    display: inline;
+    font-weight: bold;
+  }
+}

@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <!-- Default Global Styles -->
+    <link rel="stylesheet" href="{% static 'css/style.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/student/attend.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/student/classroom.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/student/courses.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/student/dashboard.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/student/results.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/student/schedule.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/student/quiz_list.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/student/profile.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/student/quiz_summary.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/student/quiz_overview.css'%}" />
+    <link rel="stylesheet" href="{% static 'css/student/settings.css'%}" />
+    <link
+    rel="stylesheet"
+    href="{%static 'css/teacher/classroom_feed.css' %}"
+  />
+
+    <!-- Dynamic Page Styles -->
+    <link id="page-style" rel="stylesheet" href="" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script
+      src="https://kit.fontawesome.com/b08349ee28.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Default JS -->
+    <script defer src="{% static 'js/student/index.js'%}"></script>
+  
+
+
+    <title>Study Sync</title>
+  </head>
+  <body>
+    <div class="page">
+      <!-- Navbar -->
+      <div class="navbar">
+        <div class="left">
+          <div class="menu-toggle"><i class="fa-solid fa-bars"></i></div>
+          <h1>Study Sync</h1>
+        </div>
+        <div class="right">
+          <ul class="items">
+            <li class="item"><i class="fa-solid fa-bell"></i></li>
+            <li class="item" data-page="profile" title="Profile">
+              <i class="fa-solid fa-circle-user"></i>
+            </li>
+            
+          </ul>
+        </div>
+      </div>
+
+      <!-- Sidebar + Content -->
+      <div class="second">
+        <div class="sidebar">
+          <!-- Profile Section in Sidebar -->
+<!-- Sidebar Profile Section -->
+<div class="sidebar-profile">
+  <!-- Large Icon & Name: only visible on hover -->
+  <a href="../profile/" class="profile-expanded">
+    <div class="profile-picture">
+      <i class="fa-solid fa-circle-user"></i>
+    </div>
+    <div class="profile-name">{{ user.reg_no }}</div>
+  </a>
+
+  <!-- Always Visible Small Profile Button -->
+  <!-- <a href="../profile/" class="sidebar-profile-button" title="Profile">
+    <i class="fa-solid fa-user"></i>
+    <span class="menu-title">Profile</span>
+  </a> -->
+  <a href="/logout" class="sidebar-profile-button" title="Profile">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    <span class="menu-title">Logout</span>
+  </a>
+
+  <hr class="sidebar-divider" />
+</div>
+          <div class="menu">
+            <div
+              class="menu-item"
+              data-page="dashboard"
+            >
+              <i class="fa-solid fa-house"></i
+              ><span class="menu-title">Home</span>
+            </div>
+            <div
+              class="menu-item"
+              data-page="courses"
+            >  
+              <i class="fa-solid fa-book"></i
+              ><span class="menu-title">Courses</span>
+            </div>
+            <div
+              class="menu-item"
+              data-page="schedule"
+            >
+              <i class="fa-solid fa-calendar-days"></i
+              ><span class="menu-title">Schedule</span>
+            </div>
+            <div
+              class="menu-item"
+              data-page="attend"
+            >
+              <i class="fa-solid fa-id-card"></i
+              ><span class="menu-title">Attendance</span>
+            </div>
+            <div
+              class="menu-item"
+              data-page="quiz_list"
+            >
+              <i class="fa-solid fa-tasks"></i
+              ><span class="menu-title">Quizzes</span>
+            </div>
+            <div
+              class="menu-item"
+              data-page="classrooms"
+            >
+              <i class="fa-solid fa-graduation-cap"></i
+              ><span class="menu-title">Classrooms</span>
+            </div>
+            <div
+              class="menu-item"
+              data-page="settings"
+            >
+              <i class="fa-solid fa-gear"></i
+              ><span class="menu-title">Settings</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Content Section -->
+        <div class="content">
+          {% block content %}
+        
+
+          {% endblock%}
+        </div>
+      </div>
+    </div>
+
+    <!-- Dynamic Page JS Placeholder -->
+     {% block scripts %}
+
+    {% endblock %}
+    <!-- Notification Panel -->
+<div class="notification-panel hidden">
+  <h3>Notifications</h3>
+  <ul class="notification-list">
+    <li>No new notifications</li>
+    <!-- Add dynamic notifications here -->
+  </ul>
+</div>
+
+  </body>
+</html>

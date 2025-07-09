@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #F4F6FF;
+  /* Updated background color */
+}
+
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  display: flex;
+  background: #3D3B8E;
+  /* Dark blue */
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 30px;
+  width: 100%;
+  height: 10vh;
+  color: white;
+  white-space: nowrap;
+  /* Ensures navbar text stays in one line */
+  overflow: hidden;
+}
+
+.right ul {
+  list-style: none;
+  display: flex;
+}
+
+.items>li {
+  font-size: 26px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.items>li:hover {
+  transform: scale(1.1);
+}
+
+.items>li:not(:last-child) {
+  margin-right: 30px;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+/* SIDEBAR (Laptop: Hover | Mobile: Toggle) */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 10vh;
+  height: calc(100vh - 10vh);
+  z-index: 1100;
+  width: 60px;
+  min-width: 60px;
+  transition: width 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  overflow: hidden;
+  background-color: #3D3B8E;
+  /* Sidebar color */
+  color: white;
+  visibility: visible;
+}
+
+/* EXPANDS ON HOVER (Desktop) */
+.sidebar:hover {
+  width: 230px;
+}
+
+/* Show menu titles when sidebar expands */
+.sidebar:hover .menu-title {
+  opacity: 1;
+  transform: translateX(0);
+}
+.content {
+  padding-left: 60px;
+  padding-top: 10vh;
+}
+
+/* MOBILE: Sidebar Toggle */
+
+
+/* MENU */
+.menu {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 10px 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  width: 100%;
+  height: 50px;
+  border-radius: 8px;
+  transition: background 0.2s ease-in-out, padding-left 0.3s ease-in-out;
+  padding: 0 15px;
+}
+
+.menu-item i {
+  font-size: 22px;
+  width: 30px;
+}
+
+.menu-item:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.menu-title {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  margin-left: 10px;
+  user-select: none; 
+  -webkit-user-select: none; 
+  -ms-user-select: none;
+}
+
+/* Sidebar Profile Section */
+.sidebar-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 10px 10px;
+}
+
+/* Large Profile Icon */
+.profile-picture {
+  font-size: 100px;
+  color: white;
+  margin-bottom: 5px;
+  cursor: default;
+}
+
+/* Profile Name under Icon */
+.profile-name {
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* Smaller Profile Button (like menu-item) */
+.sidebar-profile-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  color: white;
+}
+
+.sidebar-profile-button i {
+  font-size: 20px;
+  width: 30px;
+}
+
+/* Hover Effect */
+.sidebar-profile-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Divider */
+.sidebar-divider {
+  width: 90%;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  margin: 15px 0 0;
+}
+
+/* Expand label when sidebar hovers */
+.sidebar:hover .sidebar-profile-button .menu-title {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Hide the large profile section by default */
+.profile-expanded {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+/* Show large profile section when sidebar expands (hover) */
+.sidebar:hover .profile-expanded {
+  display: flex;
+}
+
+/* Hide the small button when expanded to avoid duplication */
+.sidebar:hover .sidebar-profile-button {
+  display: block;
+}
+
+.sidebar-profile a {
+  text-decoration: none;
+}
+
+.notification-panel {
+  position: fixed;
+  top: 70px;
+  right: 30px;
+  width: 300px;
+  max-height: 400px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 2000;
+  overflow-y: auto;
+  padding: 15px 20px;
+  transition: all 0.3s ease;
+}
+
+.notification-panel h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #3D3B8E;
+}
+
+.notification-list {
+  list-style: none;
+  padding: 0;
+}
+
+.notification-list li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.notification-list li:last-child {
+  border-bottom: none;
+}
+
+/* Hidden by default */
+.notification-panel.hidden {
+  display: none;
+}
+
+
+/* CONTENT */
+
+/* DASHBOARD GRID */
+
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 1024px) {
+  .content{
+    padding-left: 0;
+  }
+  .sidebar {
+    width: 0;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .navbar{
+    padding-left: 15px;
+  }
+  .sidebar.open {
+    width: 230px;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .sidebar.open .menu-title {
+    opacity: 1;
+  }
+  /* Smooth closing */
+  .sidebar.close {
+    width: 0;
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+/* MOBILE MENU TOGGLE BUTTON */
+.menu-toggle {
+  display: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: white;
+  background: transparent;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+@media (max-width: 1024px) {
+  .menu-toggle {
+    display: block;
+    margin-right: 20px;
+    width: 30px;
+  }
+}

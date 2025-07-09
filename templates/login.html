@@ -1,0 +1,257 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudySync - Sign In</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", sans-serif;
+      }
+      body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: url("{% static 'assets/loginbg.jpg' %}") center/cover
+          no-repeat;
+        overflow: hidden;
+      }
+      .form-card {
+        display: flex;
+        width: 900px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        overflow: hidden;
+      }
+      .side-image {
+        flex: 1;
+        background: url("{% static "/assets/rocket.jpg"%}") center/cover
+          no-repeat;
+        min-height: 500px;
+      }
+      .form-content {
+        flex: 1;
+        padding: 50px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .logo {
+        width: 180px;
+        margin-bottom: 20px;
+        filter: brightness(1.2) contrast(1.1);
+      }
+      h1 {
+        color: white;
+        font-size: 2rem;
+        margin-bottom: 30px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      .input-group {
+        margin-bottom: 25px;
+        position: relative;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 12px 40px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+        font-size: 1rem;
+        background: rgba(255, 255, 255, 0.9);
+        color: #333;
+        transition: border-color 0.3s, background 0.3s;
+      }
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: #4a90e2;
+        background: rgba(255, 255, 255, 0.95);
+      }
+      input::placeholder {
+        color: #666;
+      }
+      .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+        font-size: 1rem;
+      }
+      .error-message {
+        color: red;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        display: none;
+      }
+      button {
+        width: 100%;
+        padding: 12px;
+        background: #4a90e2;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.3s;
+        margin-top: 15px;
+        font-weight: 500;
+      }
+      button:hover {
+        background: #357abd;
+        transform: translateY(-2px);
+      }
+      .google-btn {
+        background: #db4437;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+      .google-btn:hover {
+        background: #c1351a;
+      }
+      .forgot-password {
+        text-align: right;
+        margin: 10px 0;
+      }
+      .forgot-password a {
+        color: white;
+        text-decoration: underline;
+        font-size: 0.9rem;
+        transition: opacity 0.3s;
+      }
+      .forgot-password a:hover {
+        opacity: 0.9;
+        text-decoration: none;
+      }
+      /* Dropdown Styling */
+      select {
+        appearance: none;
+        cursor: pointer;
+      }
+      .dropdown:after {
+        content: "\f078"; /* FontAwesome down arrow */
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+        pointer-events: none;
+      }
+      @media (max-width: 768px) {
+        .form-card {
+          flex-direction: column;
+          width: 95%;
+          margin: 20px;
+        }
+        .side-image {
+          min-height: 200px;
+        }
+        .form-content {
+          padding: 30px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-card">
+      <div class="side-image"></div>
+      <div class="form-content">
+        <img src="/static/assets/logo.png" alt="StudySync Logo" class="logo" />
+        {% if messages %}
+        <div
+          class="error-container"
+          style="
+            background: rgba(255, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            color: white;
+            text-align: center;
+          "
+        >
+          {% for message in messages %}
+          <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <form action="/login/" method="post" id="loginForm">
+          {% csrf_token %}
+          <div class="input-group dropdown">
+            <i class="input-icon fas fa-user"></i>
+            <select id="role" name="role" required>
+              <option value="" disabled selected>Select your role</option>
+              <option value="student">Student</option>
+              <option value="teacher">Teacher</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <i class="input-icon fas fa-envelope"></i>
+            <input
+              type="email"
+              id="email"
+              placeholder="Email"
+              name="email"
+              required
+              autocomplete="email"
+            />
+          </div>
+          <div class="input-group">
+            <i class="input-icon fas fa-lock"></i>
+            <input
+              type="password"
+              placeholder="Password"
+              id="password"
+              name="password"
+              required
+              autocomplete="current-password"
+            />
+          </div>
+          <!-- <div class="forgot-password">
+            <a href="#">Forgot Password?</a>
+          </div> -->
+          <button type="submit" id="submitBtn">Next</button>
+          <!-- <button onclick="window.location.href='{% url 'google_login' %}'" type="button" class="google-btn">
+            <i class="fab fa-google"></i>
+            Sign in with Google
+          </button> -->
+        </form>
+      </div>
+    </div>
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          const role = document.getElementById("role").value;
+          if (!role) {
+            event.preventDefault();
+            alert("Please select a role.");
+          }
+        });
+      setTimeout(() => {
+        document.querySelectorAll(".error-message").forEach((msg) => {
+          msg.style.display = "none";
+        });
+      }, 3000);
+    </script>
+  </body>
+</html>

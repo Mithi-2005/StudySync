@@ -1,0 +1,99 @@
+.enroll-container {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .enroll-title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+  }
+  .enroll-form-group {
+    margin-bottom: 15px;
+  }
+  .enroll-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  .enroll-input {
+    width: 100% !important;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  .enroll-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #3D3B8E;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .enroll-btn:hover {
+    background: #2F2C73;
+  }
+/* Hide default dropdown arrow */
+.selectpicker {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background-image: none !important;
+  background: transparent !important;
+}
+
+/* Fix styling issue for Bootstrap 5 */
+.bootstrap-select .dropdown-toggle::after {
+  display: none !important; /* Remove default arrow */
+}
+.bootstrap-select .dropdown-menu li a:hover {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+.bootstrap-select .btn:focus, 
+.bootstrap-select .dropdown-toggle:focus, 
+.bootstrap-select .btn-light:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+.bootstrap-select .btn {
+  border: none !important;
+  background: transparent !important;
+  padding: 0px !important;
+}
+.bootstrap-select {
+  width: 100% !important;
+}
+.bootstrap-select .dropdown-toggle {
+  padding: 5px 10px !important;
+}
+.bootstrap-select .dropdown-menu li a {
+  border: none !important;
+}
+.success-message {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 5px;
+  border-left: 5px solid #035805;
+}
+
+.error-message {
+  background-color: #f44336;
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 5px;
+  border-left: 5px solid #780d05;
+}
+

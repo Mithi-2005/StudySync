@@ -1,0 +1,26 @@
+{% extends "../index.html" %}
+{% block content %}
+<div class="card-container">
+    <div class="heading-row">
+        <div>Course Name</div>
+        <div>Course Code</div>
+        <div>Professor</div>
+        <div>Credits</div>
+        <div>Links</div>
+    </div>
+
+    {% for course in courses %}
+    <div class="card">
+        <h3>{{ course.course_name }}</h3>
+        <p><strong>Course Code:</strong> {{ course.course_code }}</p>
+        <p><strong>Professor:</strong> {{ course.professor }}</p>
+        <p><strong>Credits:</strong> {{ course.credits }}</p>
+        <a href="#">Go there</a>  <!-- You can later link to course page -->
+    </div>
+    {% endfor %}
+</div>
+
+{% if courses|length == 0 %}
+<p>No courses enrolled yet.</p>
+{% endif %}
+{% endblock content %}

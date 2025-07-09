@@ -1,0 +1,149 @@
+{% extends "../teacher/index.html" %}
+
+{% block content %}
+<div class="formt-section">
+
+  <div class="formt-toggle">
+    <button id="account-btn" class="toggle-btn active">Account Settings</button>
+    <button id="notifications-btn" class="toggle-btn">Notification Settings</button>
+    <button id="about-btn" class="toggle-btn">About</button>
+  </div>
+
+  <!-- Account Settings Section -->
+  <div id="account-settings" class="formt-container">
+    <h2>Account Settings</h2>
+    <form action="{% url 'teachers:settings' %}" method="POST">
+      {% csrf_token %}
+
+      <!-- Row 1 -->
+      <div class="form-row three-col">
+        <div class="formt-group">
+          <label for="acc_name">Full Name:</label>
+          <input type="text" id="acc_name" name="name" value="{{ faculty.name }}" readonly>
+        </div>
+        <div class="formt-group">
+          <label for="acc_email">Email:</label>
+          <input type="email" id="acc_email" name="email" value="{{ faculty.email }}" readonly>
+        </div>
+        <div class="formt-group password-group">
+          <label for="acc_password">Password:</label>
+          <input type="password" id="acc_password" name="password" placeholder="Leave blank to keep current password">
+          <div class="show-password-wrapper">
+            <input type="checkbox" id="toggle-password">
+            <label for="toggle-password">Show Password</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="form-row three-col">
+        <div class="formt-group">
+          <label for="acc_regid">Faculty ID:</label>
+          <input type="text" id="acc_regid" name="faculty_id" value="{{ faculty.faculty_id }}" readonly>
+        </div>
+        <div class="formt-group">
+          <label for="acc_department">Department:</label>
+          <input type="text" id="acc_department" name="department" value="{{ faculty.department }}" readonly>
+        </div>
+        <div class="formt-group">
+          <label for="acc_year">Year of Join:</label>
+          <input type="text" id="acc_year" name="year" value="2023" readonly>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="form-row three-col">
+        <div class="formt-group">
+          <label for="acc_dob">Date of Birth:</label>
+          <input type="date" id="acc_dob" name="dob" value="{% if faculty.dob %}{{ faculty.dob|date:'Y-m-d' }}{% endif %}" readonly>
+        </div>
+        <div class="formt-group">
+          <label for="acc_gender">Gender:</label>
+          <input type="text" id="acc_gender" name="gender" value="{{ faculty.gender|default:'N/A' }}" readonly>
+        </div>
+        <div class="formt-group">
+          <label for="acc_mobile">Mobile Number:</label>
+          <div class="input-group">
+            <select id="acc_mobile_code" name="mobile_code" class="admin-select" required>
+              <option value="+91" selected>+91</option>
+            </select>
+            <input type="text" id="acc_mobile" name="mobile" value="{{ faculty.mobile|default:'' }}" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="form-row three-col">
+        <div class="formt-group">
+          <label for="acc_address">Address:</label>
+          <input type="text" id="acc_address" name="address" value="{{ faculty.address|default:'' }}" required>
+        </div>
+        <div class="formt-group">
+          <label for="acc_country">Country:</label>
+          <select id="acc_country" name="country" class="admin-select" required>
+            <option value="">Select Country</option>
+            {% for country in countries %}
+              <option value="{{ country }}" {% if faculty.country == country %}selected{% endif %}>{{ country }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="formt-group" id="acc_state_container">
+          <label for="acc_state">State:</label>
+          <select id="acc_state" name="state" class="admin-select" required>
+            {% for state in states %}
+              <option value="{{ state }}" {% if faculty.state == state %}selected{% endif %}>{{ state }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <!-- Row 5 -->
+      <div class="form-row three-col">
+        <div class="formt-group">
+          <label for="acc_city">City:</label>
+          <input type="text" id="acc_city" name="city" value="{{ faculty.city|default:'' }}" required>
+        </div>
+        <div class="formt-group">
+          <label for="acc_pincode">Pincode:</label>
+          <input type="text" id="acc_pincode" name="pincode" value="{{ faculty.pincode|default:'' }}" required>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Save Changes</button>
+    </form>
+  </div>
+
+  <!-- Notification Settings -->
+  <div id="notification-settings" class="formt-container" style="display: none;">
+    <h2>Notification Settings</h2>
+    <form action="/settings/notifications/" method="POST">
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="formt-group full-width">
+          <label for="email-notify">
+            <input type="checkbox" id="email-notify" checked>
+            Email Notifications
+          </label>
+        </div>
+
+        <div class="formt-group full-width">
+          <label>
+            <input type="checkbox" name="sms_notifications">
+            Enable SMS Notifications
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="btn-submit">Update Preferences</button>
+    </form>
+  </div>
+
+  <!-- About -->
+  <div id="about-settings" class="formt-container" style="display: none;">
+    <h2>About</h2>
+    <p>This system allows administrators, lecturers, and students to manage academic and user-related operations efficiently.</p>
+    <p>Version: 1.0.0</p>
+    <p>Developed by: Your Team Name</p>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends '../teacher/index.html' %}
+
+{% block content %}
+<h2>Create Post for {{ class_code }}</h2>
+<form action="" method="POST">
+    {% csrf_token %}
+    <label>Title:</label>
+    <input type="text" name="title" required>
+  
+    <label>Content:</label>
+    <textarea name="content" rows="5" required></textarea>
+  
+    <label>Post Type:</label>
+    <select name="post_type" required>
+      <option value="announcement">Announcement</option>
+      <option value="material">Material</option>
+    </select>
+  
+    <!-- Optional: Attachment URL (for now just a text field) -->
+    <label>Attachment URL (optional):</label>
+    <input type="text" name="attachment_url" placeholder="https://..." />
+  
+    <button type="submit">Create Post</button>
+  </form>
+  
+{% endblock %}

@@ -1,0 +1,154 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+.main {
+    display: flex;
+    justify-content: flex-start; /* Changed from center */
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1400px; /* Maximum container width */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Container */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 2rem;
+    justify-items: start; /* Align cards to left */
+}
+
+/* Attendance Card */
+.attendance-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    padding: 30px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 500px; /* Maximum card width */
+    min-width: 380px; /* Minimum card width */
+}
+
+/* Rest of your existing styles remain the same */
+.course-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 15px;
+    height: 55px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+}
+
+.progress[data-percent="high"] {
+    background: #2ecc71;
+}
+
+.progress[data-percent="medium"] {
+    background: #f39c12;
+}
+
+.progress[data-percent="low"] {
+    background: #e74c3c;
+}
+
+.percentage {
+    font-size: 16px;
+    font-weight: bold;
+    color: #34495e;
+    margin-bottom: 10px;
+}
+
+.attendance-info {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.info {
+    flex: 1;
+    padding: 12px;
+    margin: 5px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #2c3e50;
+}
+
+.total {
+    background: rgba(52, 73, 94, 0.1);
+}
+
+.attended {
+    background: rgba(46, 204, 113, 0.2);
+}
+
+.absent {
+    background: rgba(231, 76, 60, 0.2);
+}
+
+.hour-count {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 3px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main {
+        padding: 0 15px;
+    }
+    
+    .attendance-card {
+        min-width: 100%;
+        max-width: 100%;
+        padding: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+    
+    .attendance-card {
+        padding: 20px;
+    }
+
+    .course-name {
+        font-size: 16px;
+        height: auto;
+    }
+
+    .info {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .hour-count {
+        font-size: 16px;
+    }
+}

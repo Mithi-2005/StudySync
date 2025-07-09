@@ -1,0 +1,36 @@
+{% extends "../admin/index.html" %}
+{% block content %}
+<div class="enroll-container">
+  <div id="message-box" style="display: none;"></div>
+
+    <h2 class="enroll-title">Enroll Students</h2>
+    
+    <div class="enroll-form-group">
+        <label class="enroll-label" for="enroll-department">Select Department</label>
+        <select class="enroll-input" id="enroll-department" onchange="loadSemesters()">
+            <option value="" selected disabled>Select Department</option>
+        </select>
+    </div>
+
+    <div class="enroll-form-group">
+        <label class="enroll-label" for="enroll-semester">Select Semester</label>
+        <select class="enroll-input" id="enroll-semester" onchange="loadSections()">
+            <option value="" selected disabled>Select Semester</option>
+        </select>
+    </div>
+
+    <div class="enroll-form-group">
+        <label class="enroll-label" for="enroll-section">Select Section</label>
+        <select class="enroll-input" id="enroll-section" onchange="loadCourses()">
+            <option value="" selected disabled>Select Section</option>
+        </select>
+    </div>
+
+    <label class="enroll-label" for="enroll-course">Select Course</label>
+        <select class="enroll-input form-select selectpicker" id="enroll-course" data-live-search="true">
+            <option value="" selected disabled>Select Course</option>
+        </select>
+
+    <button class="enroll-btn" onclick="enrollStudents()">Enroll Students</button>
+</div>
+{% endblock %}

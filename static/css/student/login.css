@@ -1,0 +1,95 @@
+body {
+  background-image: url('/public/assets/loginbg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100dvh;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+form {
+  background-color: #f0f8ff; /* Light pastel blue */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.form-container {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  color: white;
+  width: 350px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  display: flex;
+  position: relative;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin-bottom: 15px;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.input-group #show {
+  position: absolute;
+  right: 15px;
+  cursor: pointer;
+}
+
+.input-group i {
+  color: white;
+  margin-right: 10px;
+}
+
+input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  width: 100%;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.google-btn {
+  background-color: #db4437;
+}
+
+.google-btn:hover {
+  background-color: #c1351d;
+}
+
+p {
+  text-align: center;
+  margin: 15px 0;
+}

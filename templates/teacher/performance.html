@@ -1,0 +1,99 @@
+{%extends "../teacher/index.html"%}
+{%block content%}
+<div class="performance-main">
+  <div class="performance-page">
+    <h1>Performance Overview</h1>
+
+    <div class="performance-summary">
+      <div class="performance-card">
+        <h3>Average Class Score</h3>
+        <p>85%</p>
+      </div>
+      <div class="performance-card">
+        <h3>Attendance Rate</h3>
+        <p>92%</p>
+      </div>
+      <div class="performance-card">
+        <h3>Top Performer</h3>
+        <p>John Doe</p>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button id="studentReportsTab" class="active">Student Reports</button>
+      <button id="classOverviewTab">Class Overview</button>
+      <button id="quizInsightsTab">Quiz Insights</button>
+    </div>
+
+    
+
+      <h2>Student Reports</h2>
+      <div id="studentReportsContent" class="tab-content active">
+        <div class="sort-container">
+          <label for="sortBy">Sort By:</label>
+          <select id="sortBy" onchange="sortTable()">
+            <option value="name">Student Name</option>
+            <option value="score">Score</option>
+            <option value="attendance">Attendance %</option>
+            <option value="section">Section</option>
+          </select>
+        </div>
+      <table id="performanceTable" class="performance-table">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Average Score</th>
+            <th>Attendance</th>
+            <th>Section</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Doe</td>
+            <td>92%</td>
+            <td>95%</td>
+            <td>A</td>
+            <td>Excellent</td>
+          </tr>
+          <tr>
+            <td>Jane Smith</td>
+            <td>78%</td>
+            <td>88%</td>
+            <td>B</td>
+            <td>Good</td>
+          </tr>
+          <tr>
+            <td>Alice Johnson</td>
+            <td>85%</td>
+            <td>90%</td>
+            <td>A</td>
+            <td>Good</td>
+          </tr>
+          <tr>
+            <td>Bob Williams</td>
+            <td>60%</td>
+            <td>80%</td>
+            <td>C</td>
+            <td>Average</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="classOverviewContent" class="tab-content">
+      <h2>Class Overview</h2>
+      <p>Average Class Score: 85%</p>
+      <p>Attendance Rate: 92%</p>
+      <p>Top Performer: John Doe</p>
+    </div>
+
+    <div id="quizInsightsContent" class="tab-content">
+      <h2>Quiz Insights</h2>
+      <p>Most Challenging Topic: Algebra</p>
+      <p>Average Quiz Score: 80%</p>
+      <p>Number of Missed Quizzes: 5</p>
+    </div>
+  </div>
+</div>
+{%endblock%}

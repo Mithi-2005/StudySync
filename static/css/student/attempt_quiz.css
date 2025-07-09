@@ -1,0 +1,531 @@
+:root {
+    --primary-color: #7a6ff0;
+    --secondary-color: #9d95f3;
+    --accent-color: #ff6b6b;
+    --correct-color: #00b894;
+    --wrong-color: #ff7675;
+    --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --neon-glow: 0 0 15px rgba(122, 111, 240, 0.3);
+    --danger-color: #e74c3c;
+    --text-color: #ffffff;
+  }
+
+  .scale-in {
+    animation: scaleIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  .hover-grow {
+    transition: transform 0.2s ease;
+  }
+  
+  .hover-grow:hover {
+    transform: scale(1.05);
+  }
+  
+  .pulse-glow {
+    animation: pulse-glow 2s infinite;
+  }
+
+  .question-type-badge {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .monospace {
+    font-family: var(--monospace-font);
+    font-weight: 600;
+  }
+
+  .glow-input:focus {
+    box-shadow: 0 0 10px var(--primary-color);
+    border-color: var(--primary-color);
+  }
+  
+  /* Global Styles */
+  body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    background: var(--bg-gradient);
+    color: var(--text-color);
+    overflow-x: hidden;
+  }
+  
+  .quiz-container {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+  }
+  
+  /* Navigation Panel */
+  .nav-panel {
+    width: 300px;
+    background-color: var(--glass-bg);
+    border-right: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .quiz-header {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .quiz-title {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  .quiz-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .quiz-timer {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+    font-size: 16px;
+  }
+  
+  .submit-btn {
+    background-color: var(--accent-color);
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #ff4c4c;
+  }
+  
+  .top-submit {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+  
+  /* Question Progress */
+  .question-progress {
+    margin-top: 30px;
+  }
+  
+  .progress-bar {
+    height: 6px;
+    background-color: var(--glass-border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background-color: var(--primary-color);
+    width: 0%;
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .question-dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .dot {
+    width: 28px;
+    height: 28px;
+    background-color: var(--glass-border);
+    border: 1px solid var(--glass-border);
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dot.active {
+    background-color: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 0 8px var(--primary-color);
+  }
+  
+  /* Quiz Content */
+  .quiz-content {
+    flex-grow: 1;
+    padding: 40px 30px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .quiz-form {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  
+  /* Question Card */
+  .question-card {
+    background-color: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: var(--neon-glow);
+    display: none;
+  }
+  
+  .question-card.active-question {
+    display: block;
+  }
+  
+  .question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .question-number {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
+  .question-text {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  /* Options Grid */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  
+  /* Option Card */
+  .option-card {
+    background-color: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 12px 16px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .option-card:hover {
+    border-color: var(--secondary-color);
+    transform: scale(1.02);
+  }
+  
+  .option-card.selected {
+    background: rgba(122, 111, 240, 0.15);
+    border: 1px solid var(--primary-color);
+    box-shadow: var(--neon-glow);
+  }
+  
+  .option-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-color);
+  }
+  
+  .option-letter {
+    font-weight: 600;
+    background-color: var(--secondary-color);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 14px;
+  }
+  
+  .option-text {
+    font-size: 15px;
+  }
+  .answered {
+    background-color: var(--correct-color);
+    border: 1px solid var(--correct-color);
+  }
+  
+  /* Text Answer */
+  .text-answer-container {
+    margin-top: 10px;
+  }
+  
+  .text-answer-container input[type="text"] {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 15px;
+    outline: none;
+  }
+  
+  .text-answer-container input[type="text"]::placeholder {
+    color: #aaa;
+  }
+  
+  /* Navigation Buttons */
+  .nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    gap: 12px;
+    position: sticky;
+    bottom: 20px;
+    background: transparent;
+    padding: 10px 0;
+  }
+  
+  .prev-btn,
+  .next-btn {
+    background-color: var(--secondary-color);
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .prev-btn:hover,
+  .next-btn:hover {
+    background-color: var(--primary-color);
+  }
+  
+  .prev-btn:disabled,
+  .next-btn:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+  }
+  
+  /* Modal */
+  .confirmation-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* background-color: rgb(0, 0, 0); */
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background-color: rgb(83, 82, 82);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: var(--neon-glow);
+    color: var(--text-color);
+    width: 300px;
+  }
+  
+  .modal-content h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  
+  .modal-cancel,
+  .modal-confirm {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .modal-cancel {
+    color: #555;
+    background-color: white;
+  }
+  
+  .modal-confirm {
+    background-color: var(--accent-color);
+    color: white;
+  }
+  
+  .modal-cancel:hover {
+    background-color: #777;
+    color: white;
+  }
+  
+  .modal-confirm:hover {
+    background-color: #ff4c4c;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--glass-bg);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+  }
+  
+  /* Keyframes */
+  @keyframes scaleIn {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes pulse-glow {
+    0% {
+      box-shadow: 0 0 0px rgba(122, 111, 240, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 12px rgba(122, 111, 240, 0.8);
+    }
+    100% {
+      box-shadow: 0 0 0px rgba(122, 111, 240, 0.4);
+    }
+  }
+  
+  @keyframes slide-in-up {
+    0% {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slide-in-left {
+    0% {
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  /* Responsive Layout */
+  @media screen and (max-width: 1024px) {
+    .quiz-container {
+      flex-direction: column;
+    }
+  
+    .nav-panel {
+      width: 100%;
+      flex-direction: row;
+      overflow-x: auto;
+      justify-content: space-between;
+      padding: 10px;
+    }
+  
+    .quiz-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  
+    .question-dots {
+      justify-content: flex-start;
+      gap: 8px;
+    }
+  
+    .question-card {
+      padding: 20px 10px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+  
+    .options-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media screen and (max-width: 600px) {
+    .quiz-title {
+      font-size: 1.5rem;
+    }
+  
+    .submit-btn {
+      font-size: 0.85rem;
+      padding: 8px 16px;
+    }
+  
+    .question-number {
+      font-size: 1rem;
+    }
+  
+    .option-text {
+      font-size: 0.95rem;
+    }
+  
+    .nav-buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .dot {
+        width: 34px;
+        height: 34px;
+      }
+      
+    .nav-buttons button {
+        padding: 14px 20px;
+      }
+  
+    .prev-btn,
+    .next-btn {
+      width: 100%;
+    }
+  }
+  

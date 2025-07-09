@@ -1,0 +1,57 @@
+{% extends "../teacher/index.html" %}
+
+{% block content %}
+<div class="lecturer-profile-container">
+ 
+
+  <div class="lecturer-profile-tabs">
+    <button class="lecturer-profile-tab-button active" data-tab="basic">Basic Info</button>
+    <button class="lecturer-profile-tab-button" data-tab="academic">Academic Info</button>
+    <button class="lecturer-profile-tab-button" data-tab="contact">Contact Info</button>
+  </div>
+
+  <!-- Basic Info Tab -->
+  <div class="lecturer-profile-tab-content active" data-content="basic">
+    <div class="lecturer-profile-info">
+      <p><strong>Name:</strong> {{ lecturer.name|default:"Not specified" }}</p>
+      <p><strong>Date of Birth:</strong> {{ lecturer.dob|date:"d M Y"|default:"Not specified" }}</p>
+      <p><strong>Gender:</strong> {{ lecturer.gender|default:"Not specified" }}</p>
+    </div>
+  </div>
+
+  <!-- Academic Info Tab -->
+  <div class="lecturer-profile-tab-content" data-content="academic">
+    <div class="lecturer-profile-academic-container">
+      <div class="lecturer-profile-academic-item">
+        <label>Faculty ID</label>
+        <span>{{ lecturer.employee_id|default:"Not specified" }}</span>
+      </div>
+      <div class="lecturer-profile-academic-item">
+        <label>Department</label>
+        <span>{{ lecturer.department|default:"Not specified" }}</span>
+      </div>
+      <div class="lecturer-profile-academic-item">
+        <label>Designation</label>
+        <span>{{ lecturer.designation|default:"Not specified" }}</span>
+      </div>
+      <div class="lecturer-profile-academic-item">
+        <label>Joining Year</label>
+        <span>{{ lecturer.joining_year|default:"Not specified" }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Info Tab -->
+  <div class="lecturer-profile-tab-content" data-content="contact">
+    <div class="lecturer-profile-info">
+      <p><strong>Email:</strong> {{ lecturer.email|default:"Not specified" }}</p>
+      <p><strong>Mobile:</strong> {{ lecturer.mobile|default:"Not specified" }}</p>
+      <p><strong>Address:</strong> {{ lecturer.address|default:"Not specified" }}</p>
+      <p><strong>City:</strong> {{ lecturer.city|default:"Not specified" }}</p>
+      <p><strong>State:</strong> {{ lecturer.state|default:"Not specified" }}</p>
+      <p><strong>Country:</strong> {{ lecturer.country|default:"Not specified" }}</p>
+      <p><strong>PIN Code:</strong> {{ lecturer.zipcode|default:"Not specified" }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

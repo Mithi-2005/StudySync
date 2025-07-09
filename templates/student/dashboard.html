@@ -1,0 +1,83 @@
+{% extends "../index.html" %}
+{% load static %}
+{% block content %}
+
+<h1 style="margin-left: 30px; margin-top: 20px">
+  Welcome to your Dashboard! 🚀
+</h1>
+
+<div class="dashboard">
+  <!-- METRICS -->
+  <div class="metrics">
+    <div class="metric-card">
+      <p>Total Quizzes Scheduled</p>
+      <h2>{{ total_quizzes }}</h2>
+    </div>
+    <div class="metric-card">
+      <p>Quizzes Attended</p>
+      <h2>{{ quizzes_attended }}</h2>
+    </div>
+    <div class="metric-card">
+      <p>Quizzes Accuracy</p>
+      <h2>{{ quizzes_accuracy }}%</h2>
+    </div>
+    <div class="metric-card">
+      <p>Assignments Submitted</p>
+      <h2>{{ assignments_submitted }}</h2>
+    </div>
+  </div>
+
+  <!-- CHARTS & TRANSACTIONS -->
+  <div class="charts-transactions">
+    <div class="chart-card">
+      <h3>Quizzes</h3>
+      <canvas class="chart-canvas" id="trendChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Assignments</h3>
+      <canvas class="chart-canvas" id="salesChart"></canvas>
+    </div>
+
+    <div class="transactions">
+      <h3>Recent Quizzes</h3>
+      <ul>
+        {% for attempt in quiz_attempts %}
+        <li>
+          <span class="name">{{ attempt.quiz_name }}</span>
+          <span class="badge {% if attempt.status == 'Completed' %}pro{% else %}advanced{% endif %}">
+            {{ attempt.status }}
+          </span>
+          <span>{{ attempt.marks_obtained }}/{{ attempt.total_marks }}</span>
+          <span>{{ attempt.accuracy }}%</span>
+        </li>
+        {% endfor %}
+      </ul>
+      <button class="view-btn">View all Quizzes</button>
+    </div>
+
+    <div class="transactions">
+      <h3>Recent Assignments</h3>
+      <ul>
+        {% for assignment in recent_assignments %}
+        <li>
+          <span class="name">{{ assignment.title }}</span>
+          <span class="badge {% if assignment.status == 'Submitted' %}pro{% else %}advanced{% endif %}">
+            {{ assignment.status }}
+          </span>
+          <span>Due: {{ assignment.due_date }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+      <button class="view-btn">View all Assignments</button>
+    </div>
+  </div>
+</div>
+
+<!-- Pass data from Django to JS (no inline script logic) -->
+<script>
+  var quizData = {{ quiz_data|safe }};
+  var assignmentData = JSON.parse('{{ assignment_data|safe }}');
+  console.log("Assignment Data from Django:", assignmentData);
+</script>
+
+{% endblock %}

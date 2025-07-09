@@ -1,0 +1,34 @@
+{% extends "../index.html" %} {% block content %}
+<h2 class="heading">Attendance</h2>
+<div class="main">
+  <div class="container">
+    
+
+
+{% if attendance_data %}
+    {% for course in attendance_data %} 
+    <div class="attendance-card">
+      <h3 class="course-name">{{ course.course_name }}</h3>
+      <div class="progress-bar">
+        <div class="progress" style="width: {{ course.percentage }}%" data-percent="{{ course.progress_level }}"></div>
+      </div>
+      <p class="percentage">{{ course.percentage }}%</p>
+      <div class="attendance-info">
+        <div class="info total">
+          Total<br /><span class="hour-count">{{ course.total }} Hrs</span>
+        </div>
+        <div class="info attended">
+          Attended<br /><span class="hour-count">{{ course.attended }} Hrs</span>
+        </div>
+        <div class="info absent">
+          Absent<br /><span class="hour-count">{{ course.absent }} Hrs</span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    
+  </div>
+</div>
+
+{% endblock content %}
